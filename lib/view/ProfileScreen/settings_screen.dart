@@ -1,5 +1,6 @@
 import 'package:event_app/commons/custom_container.dart';
 import 'package:event_app/controllers/main_controller.dart';
+import 'package:event_app/view/ProfileScreen/langauge_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -109,6 +110,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const CustomContainer(
               text: "About Application",
+              suffixIcon: Icons.arrow_forward_ios_rounded,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            CustomContainer(
+              onTap: () => Get.to(const LangaugeScreen()),
+              text: "Languages",
               suffixIcon: Icons.arrow_forward_ios_rounded,
             ),
             const SizedBox(
