@@ -1,20 +1,19 @@
 name: event_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
+  sdk: ">=3.4.3 <4.0.0"
 
 dependencies:
-
   flutter:
     sdk: flutter
 
     # Package
   smooth_page_indicator: ^1.2.0+3
   iconsax: ^0.0.8
-
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +27,5 @@ flutter:
     - Assets/onBoarding/
     - Assets/onBoarding/OnBoarding2/
     - Assets/onBoarding/OnBoarding3/
+    - Assets/icons/
+    - Assets/getStarted/

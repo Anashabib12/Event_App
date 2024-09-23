@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+
+import '../../commons/custom_bottom_sheet.dart';
+
+class GetStartedView extends StatelessWidget {
+  const GetStartedView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: SingleChildScrollView(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          SizedBox(
+              height: 250,
+              width: 375,
+              child: Image.asset(
+                "Assets/getStarted/background.png",
+                fit: BoxFit.fill,
+              )),
+          const CustomBottomSheet(),
+        ]),
+      ),
+    );
+  }
+}
