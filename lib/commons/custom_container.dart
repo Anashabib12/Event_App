@@ -2,34 +2,41 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CustomContainer extends StatelessWidget {
-  CustomContainer({super.key, required this.icon, required this.text});
+  CustomContainer(
+      {super.key, required this.icon, required this.text, this.onTap});
 
   var icon;
   String text;
+  var onTap;
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-
-    return Container(
-        height: height * 0.1,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          border: Border.all(),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(children: [
-          Icon(
-            icon,
-            color: Colors.white,
+    final theme = Theme.of(context);
+    return GestureDetector(
+      onTap: () {
+        onTap;
+      },
+      child: Container(
+          height: height * 0.1,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(10),
           ),
-          const SizedBox(
-            width: 20,
-          ),
-          Text(
-            text,
-            style: const TextStyle(color: Colors.white),
-          )
-        ]));
+          child: Row(children: [
+            Icon(
+              icon,
+              color: theme.primaryColor,
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Text(
+              text,
+              style: TextStyle(color: theme.primaryColor),
+            )
+          ])),
+    );
   }
 }

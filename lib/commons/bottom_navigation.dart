@@ -1,7 +1,8 @@
+import 'package:event_app/commons/custom_modal_sheet.dart';
 import 'package:event_app/view/OnBoardingScreen/home/home.dart';
 import 'package:flutter/material.dart';
 
-import 'image_strings.dart';
+import '../Utils/Constant/image_strings.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
   const CustomBottomNavigation({super.key});
@@ -13,23 +14,30 @@ class CustomBottomNavigation extends StatefulWidget {
 class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
   int _currentPageIndex = 0;
 
-  final _screens = const [HomeScreen()];
+  final _screens = const [
+    HomeScreen(),
+    Placeholder(),
+    Placeholder(),
+    Placeholder(),
+    Placeholder()
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: _screens[_currentPageIndex],
       bottomNavigationBar: NavigationBarTheme(
-        data: const NavigationBarThemeData(
-          backgroundColor: Color(0xff0A0C16),
-          // backgroundColor: Colors.white
+        data: NavigationBarThemeData(
+          backgroundColor: theme.scaffoldBackgroundColor,
         ),
         child: NavigationBar(
           selectedIndex: _currentPageIndex,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           indicatorColor: Colors.transparent,
           onDestinationSelected: (index) =>
-              setState(() => _currentPageIndex = index),
+              _onDestinationSelected(context, index),
           destinations: [
             NavigationDestination(
               icon: Image.asset(homeIcon),
@@ -60,5 +68,20 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
         ),
       ),
     );
+  }
+
+  void _onDestinationSelected(BuildContext context, int index) {
+    if (index == 2) {
+      // Show modal sheet if the middle icon (addIcon) is selected
+      showModalBottomSheet(
+        context: context,
+        builder: (context) =>
+            const CustomModalSheet(), // Your custom modal sheet
+      );
+    } else {
+      setState(() {
+        _currentPageIndex = index;
+      });
+    }
   }
 }
