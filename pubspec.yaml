@@ -7,8 +7,14 @@ environment:
   sdk: '>=3.4.3 <4.0.0'
 
 dependencies:
+
   flutter:
     sdk: flutter
+
+    # Package
+  smooth_page_indicator: ^1.2.0+3
+  iconsax: ^0.0.8
+
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +23,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - Assets/onBoarding/
+    - Assets/onBoarding/OnBoarding2/
+    - Assets/onBoarding/OnBoarding3/
