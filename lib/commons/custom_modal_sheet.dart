@@ -1,4 +1,3 @@
-import 'package:event_app/Utils/Constant/image_strings.dart';
 import 'package:event_app/commons/custom_container.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
