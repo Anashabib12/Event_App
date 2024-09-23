@@ -1,4 +1,5 @@
 import 'package:event_app/commons/custom_container.dart';
+import 'package:event_app/view/ProfileScreen/EditProfile/edit_profile_screen.dart';
 import 'package:event_app/view/ProfileScreen/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -26,12 +26,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           'Profile',
           style: TextStyle(color: theme.primaryColor),
         ),
-        leading: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.arrow_back_ios_rounded,
-              color: theme.primaryColor,
-            )),
+        // leading: IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(
+        //       Icons.arrow_back_ios_rounded,
+        //       color: theme.primaryColor,
+        //     )),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -64,6 +64,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: TextStyle(
                           color: theme.primaryColor.withOpacity(0.4),
                           fontSize: 14),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(const EditProfileScreen());
+                      },
+                      child: Center(
+                        child: Container(
+                          width: 54,
+                          height: 28,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: theme.iconTheme.color!),
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Center(
+                            child: Text(
+                              "Edit",
+                              style: TextStyle(color: theme.primaryColor),
+                            ),
+                          ),
+                        ),
+                      ),
                     )
                   ],
                 ),

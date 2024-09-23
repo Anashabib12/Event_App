@@ -1,6 +1,10 @@
 import 'package:event_app/commons/custom_container.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../view/Add Task Screen/add_task_screen.dart';
+import '../view/CreateTeam/create_team_screen.dart';
 
 class CustomModalSheet extends StatelessWidget {
   const CustomModalSheet({super.key});
@@ -25,7 +29,7 @@ class CustomModalSheet extends StatelessWidget {
         left: width * 0.04,
         right: width * 0.04,
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Divider at the top of the modal for visual cue to drag
@@ -33,23 +37,32 @@ class CustomModalSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 40,
                 child: Divider(
                   thickness: 3,
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               // Custom Containers for modal actions
-              CustomContainer(icon: Iconsax.edit, text: "Create Task"),
-              SizedBox(height: 10),
-              CustomContainer(icon: Iconsax.add_square, text: "Create Project"),
-              SizedBox(height: 10),
-              CustomContainer(icon: Icons.people_outline, text: "Create Team"),
-              SizedBox(height: 10),
-              CustomContainer(icon: Iconsax.clock, text: "Create Event"),
+              CustomContainer(
+                icon: Iconsax.edit,
+                text: "Create Task",
+                onTap: () => Get.to(const AddTaskScreen()),
+              ),
+              const SizedBox(height: 10),
+              const CustomContainer(
+                  icon: Iconsax.add_square, text: "Create Project"),
+              const SizedBox(height: 10),
+              CustomContainer(
+                icon: Icons.people_outline,
+                text: "Create Team",
+                onTap: () => Get.to(const CreateTeamScreen()),
+              ),
+              const SizedBox(height: 10),
+              const CustomContainer(icon: Iconsax.clock, text: "Create Event"),
             ],
           ),
         ],
