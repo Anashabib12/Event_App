@@ -2,41 +2,65 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CustomContainer extends StatelessWidget {
-  CustomContainer(
-      {super.key, required this.icon, required this.text, this.onTap});
+  const CustomContainer({
+    super.key,
+    this.icon,
+    required this.text,
+    this.onTap,
+    this.suffixIcon,
+    this.suffixSwitch,
+  });
 
-  var icon;
-  String text;
-  var onTap;
+  final IconData? icon; // Use IconData type for icon
+  final String text;
+  final VoidCallback? onTap; // Use VoidCallback for onTap
+  final IconData? suffixIcon; // Use IconData type for suffixIcon
+  final Switch? suffixSwitch; // Use Switch widget for suffixSwitch
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
     return GestureDetector(
-      onTap: () {
-        onTap;
-      },
+      onTap: onTap, // Correctly invoking onTap callback
       child: Container(
-          height: height * 0.1,
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            border: Border.all(),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(children: [
-            Icon(
-              icon,
-              color: theme.primaryColor,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                if (icon != null) // Only display the icon if it's provided
+                  Icon(
+                    icon,
+                    color: theme.primaryColor,
+                  ),
+                const SizedBox(width: 20),
+                Text(
+                  text,
+                  style: TextStyle(color: theme.primaryColor),
+                ),
+              ],
             ),
-            const SizedBox(
-              width: 20,
+            Row(
+              children: [
+                if (suffixIcon !=
+                    null) // Only display the suffix icon if it's provided
+                  Icon(
+                    suffixIcon,
+                    color: theme.primaryColor,
+                  ),
+                if (suffixSwitch !=
+                    null) // Only display the switch if it's provided
+                  suffixSwitch!,
+              ],
             ),
-            Text(
-              text,
-              style: TextStyle(color: theme.primaryColor),
-            )
-          ])),
+          ],
+        ),
+      ),
     );
   }
 }

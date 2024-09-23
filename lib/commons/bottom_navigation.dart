@@ -1,5 +1,6 @@
 import 'package:event_app/commons/custom_modal_sheet.dart';
 import 'package:event_app/view/OnBoardingScreen/home/home.dart';
+import 'package:event_app/view/ProfileScreen/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/Constant/image_strings.dart';
@@ -19,7 +20,7 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
     Placeholder(),
     Placeholder(),
     Placeholder(),
-    Placeholder()
+    ProfileScreen()
   ];
 
   @override

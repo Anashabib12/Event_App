@@ -25,7 +25,7 @@ class CustomModalSheet extends StatelessWidget {
         left: width * 0.04,
         right: width * 0.04,
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Divider at the top of the modal for visual cue to drag
@@ -33,22 +33,22 @@ class CustomModalSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
+              SizedBox(
                 width: 40,
                 child: Divider(
                   thickness: 3,
                   color: Colors.white,
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
 
               // Custom Containers for modal actions
               CustomContainer(icon: Iconsax.edit, text: "Create Task"),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               CustomContainer(icon: Iconsax.add_square, text: "Create Project"),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               CustomContainer(icon: Icons.people_outline, text: "Create Team"),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               CustomContainer(icon: Iconsax.clock, text: "Create Event"),
             ],
           ),
