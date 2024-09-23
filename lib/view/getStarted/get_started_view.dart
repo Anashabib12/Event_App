@@ -1,3 +1,4 @@
+import 'package:event_app/Utils/Constant/image_strings.dart';
 import 'package:flutter/material.dart';
 
 import '../../commons/custom_bottom_sheet.dart';
@@ -17,7 +18,7 @@ class GetStartedView extends StatelessWidget {
               height: 250,
               width: 375,
               child: Image.asset(
-                "Assets/getStarted/background.png",
+                getStartedBackground,
                 fit: BoxFit.fill,
               )),
           const CustomBottomSheet(),
