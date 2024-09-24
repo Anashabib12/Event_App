@@ -31,7 +31,8 @@ flutter:
     - Assets/onBoarding/
     - Assets/onBoarding/OnBoarding2/
     - Assets/onBoarding/OnBoarding3/
+    - Assets/ChatPerson/
+    - Assets/getStarted/
     - Assets/logos/
     - Assets/person/
     - Assets/icons/
-    - Assets/getStarted/

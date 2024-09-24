@@ -23,7 +23,7 @@ class TaskCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.grey.shade700)),
+          border: Border.all(color: Colors.grey.withOpacity(0.2),width: 1.5)),
       child: Row(
         children: [
           Expanded(
