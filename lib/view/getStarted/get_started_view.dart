@@ -9,7 +9,7 @@ class GetStartedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffA096FF),
+      backgroundColor: const Color(0xff6C5CFF),
       body: SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           SizedBox(

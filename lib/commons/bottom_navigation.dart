@@ -1,9 +1,9 @@
 import 'package:event_app/commons/custom_modal_sheet.dart';
-import 'package:event_app/view/OnBoardingScreen/home/home.dart';
 import 'package:event_app/view/ProfileScreen/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/Constant/image_strings.dart';
+import '../view/HomeScreen/home_screen.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
   const CustomBottomNavigation({super.key});
