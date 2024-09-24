@@ -1,8 +1,10 @@
 import 'package:event_app/commons/custom_modal_sheet.dart';
 import 'package:event_app/view/OnBoardingScreen/home/home.dart';
+import 'package:event_app/view/ProfileScreen/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/Constant/image_strings.dart';
+import '../view/TaskStatus/task_status_screen.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
   const CustomBottomNavigation({super.key});
@@ -18,8 +20,8 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
     HomeScreen(),
     Placeholder(),
     Placeholder(),
-    Placeholder(),
-    Placeholder()
+    TaskStatusScreen(),
+    ProfileScreen()
   ];
 
   @override

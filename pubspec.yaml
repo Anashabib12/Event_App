@@ -12,6 +12,7 @@ dependencies:
 
     # Package
   smooth_page_indicator: ^1.2.0+3
+  percent_indicator: ^4.2.3
   iconsax: ^0.0.8
   get: ^4.6.6
 

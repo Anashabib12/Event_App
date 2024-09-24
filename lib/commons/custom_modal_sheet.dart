@@ -1,6 +1,10 @@
 import 'package:event_app/commons/custom_container.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../view/Add Task Screen/add_task_screen.dart';
+import '../view/CreateTeam/create_team_screen.dart';
 
 class CustomModalSheet extends StatelessWidget {
   const CustomModalSheet({super.key});
@@ -43,13 +47,22 @@ class CustomModalSheet extends StatelessWidget {
               const SizedBox(height: 10),
 
               // Custom Containers for modal actions
-              CustomContainer(icon: Iconsax.edit, text: "Create Task"),
+              CustomContainer(
+                icon: Iconsax.edit,
+                text: "Create Task",
+                onTap: () => Get.to(const AddTaskScreen()),
+              ),
               const SizedBox(height: 10),
-              CustomContainer(icon: Iconsax.add_square, text: "Create Project"),
+              const CustomContainer(
+                  icon: Iconsax.add_square, text: "Create Project"),
               const SizedBox(height: 10),
-              CustomContainer(icon: Icons.people_outline, text: "Create Team"),
+              CustomContainer(
+                icon: Icons.people_outline,
+                text: "Create Team",
+                onTap: () => Get.to(const CreateTeamScreen()),
+              ),
               const SizedBox(height: 10),
-              CustomContainer(icon: Iconsax.clock, text: "Create Event"),
+              const CustomContainer(icon: Iconsax.clock, text: "Create Event"),
             ],
           ),
         ],

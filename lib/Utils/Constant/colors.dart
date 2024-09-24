@@ -3,4 +3,6 @@ import 'dart:ui';
 class AColors{
 
    static Color primaryLight = const Color(0xff756EF3);
+   static Color greenLight = const Color(0xffB1D199);
+   static Color yellow = const Color(0xffFFB35A);
 }
