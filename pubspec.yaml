@@ -12,7 +12,6 @@ dependencies:
 
     # Package
   smooth_page_indicator: ^1.2.0+3
-  percent_indicator: ^4.2.3
   iconsax: ^0.0.8
   get: ^4.6.6
   jiffy: ^6.3.1
@@ -30,7 +29,8 @@ flutter:
     - Assets/onBoarding/
     - Assets/onBoarding/OnBoarding2/
     - Assets/onBoarding/OnBoarding3/
+    - Assets/ChatPerson/
+    - Assets/getStarted/
     - Assets/logos/
     - Assets/person/
     - Assets/icons/
-    - Assets/getStarted/

@@ -1,10 +1,12 @@
 import 'package:event_app/commons/custom_modal_sheet.dart';
-import 'package:event_app/view/OnBoardingScreen/home/home.dart';
+import 'package:event_app/view/Chat/chat_screen.dart';
+import 'package:event_app/view/HomeScreen/home_screen.dart';
 import 'package:event_app/view/ProfileScreen/profile_screen.dart';
+import 'package:event_app/view/TaskStatus/task_status_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/Constant/image_strings.dart';
-import '../view/TaskStatus/task_status_screen.dart';
+import '../view/Project Screen/project_screen.dart';
 
 class CustomBottomNavigation extends StatefulWidget {
   const CustomBottomNavigation({super.key});
@@ -16,13 +18,7 @@ class CustomBottomNavigation extends StatefulWidget {
 class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
   int _currentPageIndex = 0;
 
-  final _screens = const [
-    HomeScreen(),
-    Placeholder(),
-    Placeholder(),
-    TaskStatusScreen(),
-    ProfileScreen()
-  ];
+  final _screens = const [ HomeScreen(), ProjectScreen(), Placeholder(), TaskStatusScreen(), ProfileScreen() ];
 
   @override
   Widget build(BuildContext context) {

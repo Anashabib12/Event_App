@@ -16,6 +16,7 @@ class CustomModalSheet extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
+      height: height * 0.40,
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         borderRadius: const BorderRadius.only(
@@ -23,7 +24,6 @@ class CustomModalSheet extends StatelessWidget {
           topRight: Radius.circular(20),
         ),
       ),
-      height: height * 0.8,
       padding: EdgeInsets.only(
         top: height * 0.02,
         left: width * 0.04,
