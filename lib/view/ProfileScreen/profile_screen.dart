@@ -1,5 +1,6 @@
 import 'package:event_app/commons/custom_container.dart';
 import 'package:event_app/view/ProfileScreen/EditProfile/edit_profile_screen.dart';
+import 'package:event_app/view/ProfileScreen/SideMenu/side_menu_screen.dart';
 import 'package:event_app/view/ProfileScreen/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: TextStyle(color: theme.primaryColor),
         ),
         // leading: IconButton(
-        //     onPressed: () {},
+        //     onPressed: () {
+
+        // },
         //     icon: Icon(
         //       Icons.arrow_back_ios_rounded,
         //       color: theme.primaryColor,
@@ -157,8 +160,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(
                 height: 20,
               ),
-              const CustomContainer(
+              CustomContainer(
                   suffixIcon: Icons.arrow_forward_ios_outlined,
+                  onTap: () => Get.to(const SideMenuScreen()),
                   text: "My Projects"),
               const SizedBox(
                 height: 20,
