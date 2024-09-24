@@ -1,5 +1,6 @@
 import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:event_app/commons/bottom_navigation.dart';
+import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,15 +24,12 @@ class CreateTeamScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                        radius: 25,
-                        backgroundColor: const Color(0xffE9F1FF),
-                        child: IconButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            icon: const Icon(Icons.arrow_back_ios,
-                                size: 22, color: Colors.grey))),
+                    CustomApButton(
+                      onTap: () {
+                        Get.back();
+                      },
+                      icon: Icons.arrow_back_ios_rounded,
+                    ),
                     SizedBox(width: width * 0.2),
                     Text('Create Team',
                         style: TextStyle(

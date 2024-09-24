@@ -1,14 +1,20 @@
 import 'package:event_app/commons/progress_card.dart';
 import 'package:event_app/commons/task_card.dart';
 import 'package:event_app/extensions/datetime.dart';
+import 'package:event_app/view/TaskStatus/task_status_screen.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   void onTap() {
     Get.back();
   }
@@ -89,12 +95,16 @@ class HomeScreen extends StatelessWidget {
                     Icon(Icons.arrow_forward_ios, color: theme.primaryColor)
                   ],
                 ),
-                const TaskCard(
-                  progress: 0.9,
-                  appName: 'Productivity Mobile App',
-                  taskName: 'Create Detail Booking',
-                  dateTime: '2 Mins Ago',
-                ),
+                TaskCard(
+                    progress: 0.9,
+                    appName: 'Productivity Mobile App',
+                    taskName: 'Create Detail Booking',
+                    dateTime: '2 Mins Ago',
+                    onTap: () {
+                      setState(() {
+                        Get.to(const TaskStatusScreen());
+                      });
+                    }),
                 const TaskCard(
                   progress: 0.9,
                   appName: 'Productivity Mobile App',
