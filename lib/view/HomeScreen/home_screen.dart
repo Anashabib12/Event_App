@@ -1,6 +1,7 @@
 import 'package:event_app/commons/progress_card.dart';
 import 'package:event_app/commons/task_card.dart';
 import 'package:event_app/extensions/datetime.dart';
+import 'package:event_app/view/Add%20Task%20Screen/add_task_screen.dart';
 import 'package:event_app/view/TaskStatus/task_status_screen.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void onTap() {
-    Get.back();
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -35,7 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomApButton(
-                      onTap: onTap,
+                      onTap: () {
+                        Get.to(const AddTaskScreen());
+                      },
                       icon: Iconsax.category,
                     ),
                     Text(
