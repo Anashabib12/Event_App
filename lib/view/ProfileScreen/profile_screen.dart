@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 20),
               CustomContainer(
                   suffixIcon: Icons.arrow_forward_ios_outlined,
-                  onTap: () => Get.to(const SideMenuScreen()),
+                  onTap: () => Get.to( SideMenuScreen()),
                   text: "My Projects"),
               const SizedBox(height: 20),
               const CustomContainer(
