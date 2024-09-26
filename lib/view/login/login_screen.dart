@@ -1,8 +1,9 @@
 import 'package:event_app/Utils/Constant/colors.dart';
-import 'package:event_app/services/firebase/signin_func.dart';
+import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/main_controller.dart';
 import '../signup/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -10,9 +11,10 @@ class LoginScreen extends StatelessWidget {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    print('dsssssssss');
+    final controller = Get.put(MainController());
     final theme = Theme.of(context);
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -36,14 +38,14 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Text('Sign in',
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 23,
                           color: theme.primaryColor,
-                          fontWeight: FontWeight.w500)),
+                          fontWeight: FontWeight.w600)),
                   const Image(
                       image: AssetImage('Assets/logos/Ellipse (8).png')),
                 ],
               ),
-              SizedBox(height: height * 0.04),
+              SizedBox(height: height * 0.12),
               Text(
                 'Welcome back',
                 style: TextStyle(
@@ -82,27 +84,34 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: height * 0.04),
 
               // Password Field
-              TextFormField(
-                controller: passController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  prefixIcon:
-                      const Icon(Icons.lock_outline, color: Colors.grey),
-                  hintText: 'Enter your password',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide:
-                        const BorderSide(width: 2, color: Color(0xffE9F1FF)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide:
-                        const BorderSide(width: 2, color: Color(0xffE9F1FF)),
+              Obx(
+                ()=> TextFormField(
+                  controller: passController,
+                  obscureText: controller.isVisible.value,
+                  decoration: InputDecoration(
+                    suffixIcon:  IconButton(onPressed: (){
+                      controller.isVisibleChange();
+                    }, icon: controller.isVisible.value
+                        ? Icon(Icons.visibility_off,color: theme.primaryColor,size: 23)
+                        : Icon(Icons.visibility,color: theme.primaryColor,size: 23)),
+                    prefixIcon:
+                        const Icon(Icons.lock_outline, color: Colors.grey),
+                    hintText: 'Enter your password',
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide:
+                          const BorderSide(width: 2, color: Color(0xffE9F1FF)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                          const BorderSide(width: 2, color: Color(0xffE9F1FF)),
+                    ),
                   ),
                 ),
               ),
-              SizedBox(height: height * 0.02),
+              // SizedBox(height: height * 0.01),
 
               // Forgot Password Link
               Row(
@@ -117,15 +126,16 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: height * 0.04),
+              SizedBox(height: height * 0.01),
 
               // Sign In Button
               SizedBox(
-                height: height * 0.07,
+                height: height * 0.06,
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {
-                    _signInUser(context);
+                    Get.offAll(()=> const CustomBottomNavigation());
+                    // _signInUser(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.iconTheme.color,
@@ -135,19 +145,24 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: const Text(
                     'Sign In',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400),
+                    style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
               SizedBox(height: height * 0.04),
 
               // Sign In with Social Accounts
-              const Center(
-                  child: Text('Signin with',
-                      style: TextStyle(color: Color(0xff868D95)))),
+               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(height: 1.5,width: 50,color: Colors.grey),
+                   SizedBox(width: width * 0.02),
+                  const Text('Signin with',style: TextStyle(color: Color(0xff868D95))),
+                  SizedBox(width: width * 0.02),
+                  Container(height: 1.5,width: 50,color: Colors.grey),
+
+                ],
+              ),
               SizedBox(height: height * 0.04),
 
               // Social Login Buttons
@@ -185,19 +200,19 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void _signInUser(BuildContext context) {
-    final email = emailController.text;
-    final password = passController.text;
-
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email and Password cannot be empty')),
-      );
-      return;
-    }
-
-    signIn(context, email, password);
-  }
+  // void _signInUser(BuildContext context) {
+  //   final email = emailController.text;
+  //   final password = passController.text;
+  //
+  //   if (email.isEmpty || password.isEmpty) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('Email and Password cannot be empty')),
+  //     );
+  //     return;
+  //   }
+  //
+  //   signIn(context, email, password);
+  // }
 
   // Social Login Button Widget
   Widget _socialLoginButton(

@@ -30,7 +30,7 @@ class ProgressCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-              color: index == 0 ? Colors.transparent : Colors.grey.shade700),
+              color: index == 0 ? Colors.transparent : Colors.grey.withOpacity(0.3)),
           // color: theme.iconTheme.color, // Background color from the theme
           color: index == 0
               ? theme.iconTheme.color

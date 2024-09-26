@@ -3,6 +3,7 @@ import 'package:event_app/commons/custom_container.dart';
 import 'package:event_app/view/ProfileScreen/EditProfile/edit_profile_screen.dart';
 import 'package:event_app/view/ProfileScreen/SideMenu/side_menu_screen.dart';
 import 'package:event_app/view/ProfileScreen/settings_screen.dart';
+import 'package:event_app/widgets/back_arrow.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,21 +49,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final height  = MediaQuery.of(context).size.height;
+    final width  = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        title: Text(
-          'Profile',
-          style: TextStyle(color: theme.primaryColor),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+          padding:  EdgeInsets.symmetric(vertical: height * 0.05, horizontal: 16.0),
           child: Column(
             children: [
+              Row(
+                children: [
+                  const BackArrow(),
+                SizedBox(width: width * 0.29),
+                Text('Profile',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: theme.primaryColor))
+                ],
+              ),
+              SizedBox(height: height * 0.05  ),
               SizedBox(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

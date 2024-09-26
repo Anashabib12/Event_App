@@ -1,13 +1,15 @@
+import 'package:event_app/controllers/main_controller.dart';
 import 'package:event_app/services/firebase/signin_func.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 // ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
-
+final controller = Get.put(MainController());
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
@@ -42,7 +44,7 @@ class SignUpScreen extends StatelessWidget {
                   const Image(image: AssetImage('Assets/logos/Ellipse (8).png'))
                 ],
               ),
-              SizedBox(height: height * 0.04),
+              SizedBox(height: height * 0.08),
               Text(
                 'Create Account',
                 style: TextStyle(
@@ -54,7 +56,7 @@ class SignUpScreen extends StatelessWidget {
               Text('Please Inter your Information\nand create your account',
                   style: TextStyle(color: AColors.grey)),
 
-              SizedBox(height: height * 0.04),
+              SizedBox(height: height * 0.03),
 
               /// Name
               TextFormField(
@@ -97,26 +99,33 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(height: height * 0.03),
 
               /// Password
-              TextFormField(
-                controller: passController,
-                decoration: InputDecoration(
-                  prefixIcon:
-                      const Icon(Icons.lock_clock_outlined, color: Colors.grey),
-                  hintText: 'Enter your password',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xffE9F1FF))),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xffE9F1FF))),
+              Obx(
+                ()=> TextFormField(
+                  controller: passController,
+                  obscureText: controller.isVisible.value,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(onPressed: (){
+                      controller.isVisibleChange();
+                    },
+                        icon: controller.isVisible.value
+                            ? Icon(Icons.visibility_off,color: theme.primaryColor,size: 23) : Icon(Icons.visibility,color: theme.primaryColor,size: 23)),
+                    prefixIcon: const Icon(Icons.lock_clock_outlined, color: Colors.grey),
+                    hintText: 'Enter your password',
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide:
+                            const BorderSide(width: 2, color: Color(0xffE9F1FF))),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide:
+                            const BorderSide(width: 2, color: Color(0xffE9F1FF))),
+                  ),
                 ),
               ),
               SizedBox(height: height * 0.03),
               SizedBox(
-                  height: height * 0.07,
+                  height: height * 0.06,
                   width: width,
                   child: ElevatedButton(
                       onPressed: () {
@@ -127,15 +136,23 @@ class SignUpScreen extends StatelessWidget {
                           backgroundColor: AColors.primaryLight,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15))),
-                      child: const Text('Sign In',
+                      child: const Text('Sign up',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
-                              fontWeight: FontWeight.w400)))),
+                              fontWeight: FontWeight.w500)))),
               SizedBox(height: height * 0.04),
-              const Center(
-                  child: Text('Signup With',
-                      style: TextStyle(color: Color(0xff868D95)))),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(height: 1.5,width: 50,color: Colors.grey),
+                  SizedBox(width: width * 0.02),
+                  const Text('Signup with',style: TextStyle(color: Color(0xff868D95))),
+                  SizedBox(width: width * 0.02),
+                  Container(height: 1.5,width: 50,color: Colors.grey),
+
+                ],
+              ),
 
               SizedBox(height: height * 0.04),
               Row(

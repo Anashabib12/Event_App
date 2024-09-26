@@ -3,17 +3,68 @@ import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
 
   @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _timeStartController = TextEditingController();
+  final TextEditingController _timeEndController = TextEditingController();
+
+  Future<void> _selectDate(BuildContext context) async {
+    // Show Date Picker
+    final DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (selectedDate != null) {
+      // Format the date to "November 01, 2021"
+      String formattedDate = DateFormat('MMMM dd, yyyy').format(selectedDate);
+      // Update the date text field with the formatted date
+      _dateController.text = formattedDate;
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    // Show Time Picker
+    final TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (selectedTime != null) {
+      // Update the time text field with the selected time
+      _timeStartController.text = "${selectedTime.hour}:${selectedTime.minute.toString().padLeft(2, '0')}"; // Format the time
+    }
+  }
+  Future<void> _selectEndTime(BuildContext context) async {
+    // Show Time Picker
+    final TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (selectedTime != null) {
+      // Update the time text field with the selected time
+      _timeEndController.text =
+      "${selectedTime.hour}:${selectedTime.minute.toString().padLeft(
+          2, '0')}"; // Format the time
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // List<String> text = ['Urgent','Running','ongoing'];
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
-
     return Scaffold(
         body: SingleChildScrollView(
       child: Padding(
@@ -126,6 +177,7 @@ class AddTaskScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.grey, fontSize: 17)),
             SizedBox(height: height * 0.02),
             TextFormField(
+              controller: _dateController,
               decoration: InputDecoration(
                 contentPadding:
                     EdgeInsets.only(top: height * 0.05, left: 15, right: 10),
@@ -138,6 +190,7 @@ class AddTaskScreen extends StatelessWidget {
                     borderSide:
                         const BorderSide(width: 2, color: Color(0xffE9F1FF))),
               ),
+              onTap: () => _selectDate(context),
             ),
             SizedBox(height: height * 0.03),
             Row(
@@ -154,6 +207,7 @@ class AddTaskScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextFormField(
+                    controller: _timeStartController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(
                           top: height * 0.05, left: 15, right: 10),
@@ -166,14 +220,15 @@ class AddTaskScreen extends StatelessWidget {
                           borderSide: const BorderSide(
                               width: 2, color: Color(0xffE9F1FF))),
                     ),
+                    onTap: () => _selectTime(context),
+
                   ),
                 ),
                 SizedBox(width: width * 0.07),
                 Expanded(
                   child: TextFormField(
+                    controller: _timeEndController,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(
-                          top: height * 0.05, left: 15, right: 10),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(
@@ -183,6 +238,7 @@ class AddTaskScreen extends StatelessWidget {
                           borderSide: const BorderSide(
                               width: 2, color: Color(0xffE9F1FF))),
                     ),
+                    onTap: ()=> _selectEndTime(context)
                   ),
                 ),
               ],
