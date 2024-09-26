@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../Utils/Constant/colors.dart';
+
 class GetStartedView extends StatelessWidget {
   const GetStartedView({super.key});
 
@@ -18,30 +19,33 @@ class GetStartedView extends StatelessWidget {
       body: Column(
         children: [
           Container(
+              height: height * 0.5,
+              width: width,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(getStartedBackground),
+                      fit: BoxFit.fill)),
+              child: Stack(
+                children: [
+                  Positioned(
+                      top: height * 0.05,
+                      left: width * 0.06,
+                      child: const Image(
+                          image: AssetImage('Assets/getStarted/Layer 2.png'))),
+                ],
+              )),
+          Container(
             height: height * 0.5,
             width: width,
-            decoration:  BoxDecoration(
-              image: DecorationImage(image: AssetImage(getStartedBackground),fit: BoxFit.fill)
-            ),
-            child:  Stack(
-              children: [
-                Positioned(
-                    top: height * 0.05,
-                    left: width * 0.06,
-                    child: const Image(image: AssetImage('Assets/getStarted/Layer 2.png'))),
-              ],
-            )
-          ),
-          Container(
-            height:  height * 0.5,
-            width:   width,
             decoration: BoxDecoration(
-              color: theme.scaffoldBackgroundColor,
-              borderRadius: const BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))),
+                color: theme.scaffoldBackgroundColor,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25))),
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height:  height * 0.02),
+                SizedBox(height: height * 0.02),
                 SmoothPageIndicator(
                   count: 3,
                   controller: PageController(),
@@ -53,14 +57,16 @@ class GetStartedView extends StatelessWidget {
                     dotColor: Colors.grey.withOpacity(0.4),
                   ),
                 ),
-                SizedBox(height:  height * 0.03),
+                SizedBox(height: height * 0.03),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                        'Taskcy',
-                        style: TextStyle(color: AColors.primaryLight,fontWeight: FontWeight.bold,fontSize: 50)),
+                    Text('Taskcy',
+                        style: TextStyle(
+                            color: AColors.primaryLight,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 50)),
                     Text(
                       "Building Better \n   Workplaces",
                       style: TextStyle(
@@ -68,20 +74,28 @@ class GetStartedView extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: theme.primaryColor),
                     ),
-                    SizedBox(
-                        height: height * 0.03),
+                    SizedBox(height: height * 0.03),
                     Text(
                         "Create a unique emotional story that \n       describes better than words",
-                        style: TextStyle(fontSize: 14,color: Colors.grey.withOpacity(0.8),fontWeight: FontWeight.w500)),
-                    SizedBox(height:  height * 0.04),
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.withOpacity(0.8),
+                            fontWeight: FontWeight.w500)),
+                    SizedBox(height: height * 0.04),
                     SizedBox(
-                        height:  height * 0.06,
-                        width:  width *0.7,
-                        child: ElevatedButton(onPressed: (){
-                          Get.offAll(() => const OnBoardingScreen());
-                        }, style: ElevatedButton.styleFrom(backgroundColor: AColors.primaryLight,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
-                            child: const Text('Get Started',style: TextStyle(color: Colors.white,fontSize: 20))))
+                        height: height * 0.06,
+                        width: width * 0.7,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Get.offAll(() => const OnBoardingScreen());
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: AColors.primaryLight,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15))),
+                            child: const Text('Get Started',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20))))
                   ],
                 ),
               ],
@@ -93,4 +107,3 @@ class GetStartedView extends StatelessWidget {
     );
   }
 }
-

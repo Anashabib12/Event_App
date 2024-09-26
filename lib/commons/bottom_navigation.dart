@@ -17,12 +17,12 @@ class CustomBottomNavigation extends StatefulWidget {
 class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
   int _currentPageIndex = 0;
 
-  final _screens = const [
-    HomeScreen(),
-    ProjectScreen(),
-    Placeholder(),
+  final _screens = [
+    const HomeScreen(),
+    const ProjectScreen(),
+    const Placeholder(),
     ChatScreen(),
-    ProfileScreen()
+    const ProfileScreen()
   ];
 
   @override

@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_app/commons/custom_container.dart';
 import 'package:event_app/view/ProfileScreen/EditProfile/edit_profile_screen.dart';
 import 'package:event_app/view/ProfileScreen/SideMenu/side_menu_screen.dart';
 import 'package:event_app/view/ProfileScreen/settings_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -14,7 +16,35 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool isSwitched = false;
+  String _userName = 'Loading...'; // Default text while loading
+  String _userEmail = '@unknown_user'; // Default email
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData(); // Fetch user data when the screen initializes
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      String userId = _firebaseAuth.currentUser!.uid; // Get current user ID
+      DocumentSnapshot userDoc =
+          await _firestore.collection('users').doc(userId).get();
+
+      if (userDoc.exists) {
+        setState(() {
+          _userName =
+              userDoc['name'] ?? 'Unknown User'; // Fetch name from Firestore
+          _userEmail =
+              userDoc['email'] ?? '@unknown_user'; // Fetch email if needed
+        });
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +57,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           'Profile',
           style: TextStyle(color: theme.primaryColor),
         ),
-        // leading: IconButton(
-        //     onPressed: () {
-
-        // },
-        //     icon: Icon(
-        //       Icons.arrow_back_ios_rounded,
-        //       color: theme.primaryColor,
-        //     )),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -59,18 +81,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "Unknown User",
+                      _userName, // Display the fetched user name
                       style: TextStyle(color: theme.primaryColor, fontSize: 18),
                     ),
                     Text(
-                      "@unknown_user",
+                      _userEmail, // Display the fetched user email
                       style: TextStyle(
                           color: theme.primaryColor.withOpacity(0.4),
                           fontSize: 14),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     GestureDetector(
                       onTap: () {
                         Get.to(const EditProfileScreen());
@@ -94,93 +114,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Iconsax.clock,
-                        color: theme.primaryColor,
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "5",
-                        style: TextStyle(
-                          color: theme.primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "On Going",
-                        style: TextStyle(
-                            color: theme.primaryColor.withOpacity(0.4),
-                            fontSize: 12),
-                      )
-                    ],
-                  ),
-                  Container(
-                    height: 50,
-                    width: 1,
-                    color: Colors.grey.withOpacity(0.5),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Iconsax.tick_square,
-                        color: theme.primaryColor,
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "25",
-                        style: TextStyle(
-                          color: theme.primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "Total Completed",
-                        style: TextStyle(
-                            color: theme.primaryColor.withOpacity(0.4),
-                            fontSize: 12),
-                      )
-                    ],
-                  ),
+                  _buildProfileStat(theme, Iconsax.clock, "5", "On Going"),
+                  _buildVerticalDivider(),
+                  _buildProfileStat(
+                      theme, Iconsax.tick_square, "25", "Total Completed"),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               CustomContainer(
                   suffixIcon: Icons.arrow_forward_ios_outlined,
                   onTap: () => Get.to(const SideMenuScreen()),
                   text: "My Projects"),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const CustomContainer(
                   suffixIcon: Icons.arrow_forward_ios_outlined,
                   text: "Join a Team"),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const CustomContainer(
                 suffixIcon: Icons.arrow_forward_ios_outlined,
                 text: "Settings",
                 onTap: onTap,
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const CustomContainer(
                   suffixIcon: Icons.arrow_forward_ios_outlined,
                   text: "My Tasks"),
@@ -190,8 +149,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
+  // Helper function to build profile stats
+  Widget _buildProfileStat(
+      ThemeData theme, IconData icon, String count, String label) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(icon, color: theme.primaryColor),
+        const SizedBox(height: 5),
+        Text(
+          count,
+          style: TextStyle(
+            color: theme.primaryColor,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyle(
+              color: theme.primaryColor.withOpacity(0.4), fontSize: 12),
+        ),
+      ],
+    );
+  }
+
+  // Helper function to build vertical divider
+  Widget _buildVerticalDivider() {
+    return Container(
+      height: 50,
+      width: 1,
+      color: Colors.grey.withOpacity(0.5),
+    );
+  }
 }
 
-onTap() {
+// Function to handle navigation to settings screen
+void onTap() {
   Get.to(const SettingsScreen());
 }

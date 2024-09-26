@@ -1,6 +1,5 @@
 import 'package:event_app/Utils/Constant/colors.dart';
-import 'package:event_app/commons/bottom_navigation.dart';
-import 'package:event_app/view/login/login_screen.dart';
+import 'package:event_app/services/auth/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -30,7 +29,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         backgroundColor: theme.scaffoldBackgroundColor,
         // appBar: AppBar(),
         body: Padding(
-          padding:  EdgeInsets.symmetric(vertical:  height * 0.05),
+          padding: EdgeInsets.symmetric(vertical: height * 0.05),
           child: PageView(
             controller: controller,
             onPageChanged: (index) {
@@ -287,7 +286,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         child: IconButton(
                           onPressed: () {
                             if (isLastPage) {
-                              Get.to(const LoginScreen());
+                              Get.to(const AuthGate());
                             } else {
                               controller.nextPage(
                                 duration: const Duration(milliseconds: 500),

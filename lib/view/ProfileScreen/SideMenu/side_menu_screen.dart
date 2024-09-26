@@ -1,32 +1,60 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:event_app/services/firebase/signin_func.dart';
+import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:event_app/widgets/small_text_container.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../EditProfile/edit_profile_screen.dart';
 
-class SideMenuScreen extends StatelessWidget {
+class SideMenuScreen extends StatefulWidget {
   const SideMenuScreen({super.key});
+
+  @override
+  State<SideMenuScreen> createState() => _SideMenuScreenState();
+}
+
+class _SideMenuScreenState extends State<SideMenuScreen> {
+  String _userName = 'Loading...';
+  // Default text while loading
+  String _userEmail = '@unknown_user';
+  // Default email
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData(); // Fetch user data when the screen initializes
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      String userId = _firebaseAuth.currentUser!.uid; // Get current user ID
+      DocumentSnapshot userDoc =
+          await _firestore.collection('users').doc(userId).get();
+
+      if (userDoc.exists) {
+        setState(() {
+          _userName =
+              userDoc['name'] ?? 'Unknown User'; // Fetch name from Firestore
+          _userEmail =
+              userDoc['email'] ?? '@unknown_user'; // Fetch email if needed
+        });
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        title: Text(
-          'Profile',
-          style: TextStyle(color: theme.primaryColor),
-        ),
-        leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.cancel_outlined,
-              color: theme.primaryColor,
-            )),
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
@@ -38,6 +66,17 @@ class SideMenuScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CustomApButton(
+                          onTap: () {
+                            Get.back(); // Navigate back
+                          },
+                          icon: FontAwesomeIcons.x,
+                        ),
+                      ],
+                    ),
                     const CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.grey,
@@ -51,11 +90,11 @@ class SideMenuScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "Unknown User",
+                      _userName,
                       style: TextStyle(color: theme.primaryColor, fontSize: 18),
                     ),
                     Text(
-                      "@unknown_user",
+                      _userEmail,
                       style: TextStyle(
                           color: theme.primaryColor.withOpacity(0.4),
                           fontSize: 14),
@@ -143,15 +182,17 @@ class SideMenuScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 48,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        signOut(context);
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: theme.iconTheme.color),
-                      child: Text(
+                      child: const Text(
                         "Log Out",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: theme.primaryColor),
+                            color: Colors.white),
                       ))),
             ],
           ),
