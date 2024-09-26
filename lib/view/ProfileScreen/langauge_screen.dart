@@ -1,64 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import '../../commons/custom_container.dart';
+import '../../widgets/back_arrow.dart';
 
-class LangaugeScreen extends StatelessWidget {
-  const LangaugeScreen({super.key});
-
+class LanguageScreen extends StatelessWidget {
+  const LanguageScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    final height  = MediaQuery.of(context).size.height;
+    final width  = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        title: Text(
-          'Language',
-          style: TextStyle(color: theme.primaryColor),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Get.back();
-          },
-          color: theme.primaryColor,
-        ),
-      ),
-      body: const Padding(
-        padding: EdgeInsets.all(12.0),
+
+      body: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: width * 0.05,vertical: height * 0.07),
         child: Column(
           children: [
-            SizedBox(
+            Row(
+              children: [
+                const BackArrow(),
+                SizedBox(width: width * 0.24),
+                Text('Language',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w400,color: theme.primaryColor))
+              ],
+            ),
+            const SizedBox(
               height: 20,
             ),
             // Uncomment below lines if needed
-            CustomContainer(
+            const CustomContainer(
               text: "English",
               suffixIcon: Icons.circle,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            CustomContainer(
+            const CustomContainer(
               text: "Urdu",
               suffixIcon: Icons.circle_outlined,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            CustomContainer(
+            const CustomContainer(
               text: "Spanish",
               suffixIcon: Icons.circle_outlined,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            CustomContainer(
+            const CustomContainer(
               text: "French",
               suffixIcon: Icons.circle_outlined,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
           ],

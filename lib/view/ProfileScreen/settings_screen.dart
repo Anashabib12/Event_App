@@ -21,12 +21,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final controller = Get.put(MainController());
+    final height  = MediaQuery.of(context).size.height;
+    final width  = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding:  EdgeInsets.symmetric(horizontal: width * 0.05,vertical: height * 0.09),
           child: Column(
             children: [
               Row(
@@ -37,8 +39,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                     icon: Icons.arrow_back_ios_rounded,
                   ),
-                  const SizedBox(
-                    width: 40,
+                   SizedBox(
+                    width: width * 0.25,
                   ),
                   Text(
                     'Settings',
@@ -49,8 +51,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 40,
+               SizedBox(
+                height: height *0.09,
               ),
               CustomContainer(
                 text: "Permission",
@@ -127,7 +129,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 height: 20,
               ),
               CustomContainer(
-                onTap: () => Get.to(const LangaugeScreen()),
+                onTap: () => Get.to(const LanguageScreen()),
                 text: "Languages",
                 suffixIcon: Icons.arrow_forward_ios_rounded,
               ),

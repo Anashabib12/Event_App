@@ -1,3 +1,4 @@
+import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:event_app/commons/custom_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ class CustomModalSheet extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
-      // height: height * 0.40,
+      height: height * 0.42,
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         borderRadius: const BorderRadius.only(
@@ -37,14 +38,16 @@ class CustomModalSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                width: 40,
-                child: Divider(
-                  thickness: 3,
-                  color: Colors.white,
-                ),
+              Container(
+                height: 5,
+                width: width * 0.13,
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius:  BorderRadius.circular(15)),
               ),
-              const SizedBox(height: 10),
+
+               SizedBox(height: height *0.04),
+
 
               // Custom Containers for modal actions
               CustomContainer(
@@ -63,6 +66,11 @@ class CustomModalSheet extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const CustomContainer(icon: Iconsax.clock, text: "Create Event"),
+               SizedBox(height: height *0.01),
+              CircleAvatar(radius: 25,backgroundColor: AColors.primary,
+                child: IconButton(onPressed: (){
+                  Get.back();
+                }, icon: const Icon(Icons.close,color: Colors.white,size: 27)))
             ],
           ),
         ],

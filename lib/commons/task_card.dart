@@ -1,5 +1,8 @@
+import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+
+import '../Utils/Constant/theme.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard(
@@ -8,13 +11,14 @@ class TaskCard extends StatelessWidget {
       required this.appName,
       required this.taskName,
       this.dateTime,
-      this.onTap});
+      this.onTap, this.colorChange,});
 
   final double progress;
   final String appName;
   final String taskName;
   final dateTime;
   final onTap;
+  final bool? colorChange;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +69,7 @@ class TaskCard extends StatelessWidget {
                 "${(progress * 100).toInt()}%",
                 style: TextStyle(color: theme.primaryColor),
               ),
-              progressColor: Colors.blueAccent,
+              progressColor: AColors.primaryLight,
             ),
           ],
         ),
