@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'package:event_app/extensions/datetime.dart';
+import 'package:event_app/model/task_model.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MonthlyTaskScreen extends StatefulWidget {
@@ -16,6 +19,40 @@ class MonthlyTaskScreen extends StatefulWidget {
 class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  List<Task> tasks = [];
+  Map<DateTime, List<Task>> _groupedTasks = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+
+  Future<void> _loadTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> taskList = prefs.getStringList('tasks') ?? [];
+
+    setState(() {
+      tasks = taskList.map((task) => Task.fromJson(jsonDecode(task))).toList();
+      _groupTasksByDate();
+    });
+  }
+
+  // Group tasks by date to be used in the event loader
+  void _groupTasksByDate() {
+    _groupedTasks = {};
+    for (var task in tasks) {
+      DateTime taskDate = DateFormat('yyyy-MM-dd').parse(task.date);
+      if (_groupedTasks[taskDate] == null) {
+        _groupedTasks[taskDate] = [];
+      }
+      _groupedTasks[taskDate]!.add(task);
+    }
+  }
+
+  List<Task> _getTasksForDay(DateTime date) {
+    return _groupedTasks[date] ?? [];
+  }
 
   void onTap() {
     Get.back();
@@ -24,8 +61,9 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor, // Dark background
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -33,6 +71,7 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // App bar with back and edit buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -56,7 +95,7 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${DateTime.now().dateTime}✍",
+                      "${DateFormat('dd MMMM yyyy').format(DateTime.now())}✍",
                       style: TextStyle(
                         color: theme.primaryColor,
                         fontSize: 32,
@@ -68,7 +107,7 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                       child: const Center(
                         child: Icon(Iconsax.calendar_1, color: Colors.white),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 const SizedBox(height: 4),
@@ -84,7 +123,7 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                // Task Date Row
+                // Horizontal Task Date Row
                 SizedBox(
                   height: 118,
                   child: ListView.builder(
@@ -98,22 +137,24 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                           DateFormat('dd').format(date); // Get day
                       String dayOfWeek = DateFormat('EEE').format(date);
                       bool isToday = date.isSameDate(DateTime.now());
+
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           height: 118,
                           width: 64,
-                          // padding: const EdgeInsets.all(8),
                           margin: const EdgeInsets.only(right: 4),
                           decoration: BoxDecoration(
+                            color: isToday
+                                ? theme.iconTheme.color
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
                               color: isToday
-                                  ? theme.iconTheme.color
-                                  : Colors.transparent,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                  color: isToday
-                                      ? Colors.transparent
-                                      : Colors.grey.withOpacity(0.5))),
+                                  ? Colors.transparent
+                                  : Colors.grey.withOpacity(0.5),
+                            ),
+                          ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -121,20 +162,22 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                               Text(
                                 formattedDate,
                                 style: TextStyle(
-                                    color: isToday
-                                        ? Colors.white
-                                        : Colors.grey.withOpacity(0.8),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 25),
+                                  color: isToday
+                                      ? Colors.white
+                                      : Colors.grey.withOpacity(0.8),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 25,
+                                ),
                               ),
                               Text(
                                 dayOfWeek,
                                 style: TextStyle(
-                                    color: isToday
-                                        ? Colors.white
-                                        : Colors.grey.withOpacity(0.8),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14),
+                                  color: isToday
+                                      ? Colors.white
+                                      : Colors.grey.withOpacity(0.8),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                ),
                               ),
                             ],
                           ),
@@ -144,16 +187,16 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Calendar
+                // Monthly Calendar
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
-                    color: Colors
-                        .transparent, // Background color of the calendar container
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: TableCalendar(
+                    eventLoader: _getTasksForDay,
                     firstDay: DateTime.utc(2010, 10, 16),
                     lastDay: DateTime.utc(2030, 3, 14),
                     focusedDay: _focusedDay,
@@ -166,6 +209,31 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                         _focusedDay = focusedDay;
                       });
                     },
+                    calendarBuilders: CalendarBuilders(
+                      markerBuilder: (context, date, tasks) {
+                        if (tasks.isNotEmpty) {
+                          return Container(
+                            margin: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: tasks.length > 3
+                                  ? Colors
+                                      .red // Use different color for high number of tasks
+                                  : theme.iconTheme.color,
+                              shape: BoxShape.circle,
+                            ),
+                            width: 40,
+                            height: 40,
+                            child: Center(
+                              child: Text(
+                                '${tasks.length}', // Display task count for the day
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          );
+                        }
+                        return null;
+                      },
+                    ),
                     calendarStyle: CalendarStyle(
                       todayDecoration: BoxDecoration(
                         color: Colors.transparent,
@@ -175,23 +243,21 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                         ),
                       ),
                       selectedDecoration: BoxDecoration(
-                        color: Colors.transparent,
-                        shape: BoxShape.circle,
                         border: Border.all(
                           color: theme.iconTheme.color!,
                         ),
+                        color: Colors.transparent,
+                        shape: BoxShape.circle,
                       ),
                       outsideDaysVisible: false,
                       defaultTextStyle: TextStyle(color: theme.primaryColor),
                       weekendTextStyle: TextStyle(color: theme.primaryColor),
-                      selectedTextStyle:
-                          TextStyle(color: theme.iconTheme.color),
-                      todayTextStyle: TextStyle(color: theme.iconTheme.color),
+                      selectedTextStyle: TextStyle(color: theme.primaryColor),
+                      todayTextStyle: TextStyle(color: theme.primaryColor),
                     ),
                     headerStyle: HeaderStyle(
                       titleTextFormatter: (date, dynamic locale) =>
-                          DateFormat('dd MMM yyyy')
-                              .format(date), // Custom title format
+                          DateFormat('dd MMM yyyy').format(date),
                       formatButtonVisible: false,
                       titleCentered: true,
                       titleTextStyle: TextStyle(
