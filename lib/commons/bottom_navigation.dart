@@ -148,17 +148,29 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
           onDestinationSelected: (index) =>
               _onDestinationSelected(context, index),
           destinations: [
+            ///Home icon
             NavigationDestination(
-              icon:    Icon(Iconsax.home,size: 28,color: theme.primaryColor.withOpacity(0.5)),selectedIcon: Icon(Iconsax.home_15,color: AColors.primaryLight,size: 28,),label: '',),
-            NavigationDestination(
-              icon:  Icon(Iconsax.folder_minus,color: theme.primaryColor.withOpacity(0.5)),selectedIcon:  Icon(Iconsax.folder_25,color: AColors.primaryLight), label: ''),
-            NavigationDestination(icon: CircleAvatar(radius: 28,backgroundColor:AColors.primaryLight,
-              child: const Icon(Icons.add,size: 30,color: Colors.white),),selectedIcon: Image.asset(deleteIcon),label: ''),
-            NavigationDestination(
-                icon:  Icon(Iconsax.message,color: theme.primaryColor.withOpacity(0.5)),selectedIcon:  Icon(Iconsax.message5,color: AColors.primaryLight), label: ''),
+              icon:    Icon(Iconsax.home,size: 28,color: theme.primaryColor.withOpacity(0.5))
+              ,selectedIcon: Icon(Iconsax.home_15,color: theme.iconTheme.color,size: 28,),label: ''),
 
+            ///Folder icon
+            NavigationDestination(
+              icon:  Icon(Iconsax.folder_minus,color: theme.primaryColor.withOpacity(0.5)),
+                selectedIcon: Icon(Iconsax.folder_25,color: theme.iconTheme.color,), label: ''),
 
-             NavigationDestination(icon:  Icon(Icons.person_outline,size: 28,color: theme.primaryColor.withOpacity(0.5)),selectedIcon:  Icon(Icons.person,color: AColors.primaryLight,size: 28,), label: ''),
+            ///Add icon
+            NavigationDestination(icon: CircleAvatar(radius: 28,backgroundColor: theme.iconTheme.color,
+
+                child: const Icon(Icons.add,size: 30,color: Colors.white)),
+                selectedIcon: CircleAvatar(radius: 28,backgroundColor:theme.iconTheme.color,
+
+                child: const Icon(Icons.add,size: 30,color: Colors.white)),label: ''),
+            /// Message icon
+            NavigationDestination(
+                icon:  Icon(Iconsax.message,color: theme.primaryColor.withOpacity(0.5)),selectedIcon:  Icon(Iconsax.message5,color: theme.iconTheme.color,), label: ''),
+            ///Profile icon
+            NavigationDestination(icon:  Icon(Icons.person_outline,size: 28,color: theme.primaryColor.withOpacity(0.5)),
+                selectedIcon:  Icon(Icons.person,color: theme.iconTheme.color,size: 28,), label: ''),
 
 
           ],

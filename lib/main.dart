@@ -1,5 +1,5 @@
+import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/firebase_options.dart';
-import 'package:event_app/services/auth/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +38,7 @@ class MainApp extends StatelessWidget {
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home: const AuthGate(),
+      home: const CustomBottomNavigation(),
     );
   }
 }
