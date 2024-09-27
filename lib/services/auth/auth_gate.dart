@@ -1,5 +1,5 @@
 import 'package:event_app/commons/bottom_navigation.dart';
-import 'package:event_app/view/login/login_screen.dart';
+import 'package:event_app/view/getStarted/get_started_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +28,7 @@ class AuthGate extends StatelessWidget {
             return const CustomBottomNavigation();
           } else {
             // If the user is not authenticated, show the login screen
-            return LoginScreen();
+            return const GetStartedView();
           }
         },
       ),
