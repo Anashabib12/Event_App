@@ -52,10 +52,10 @@ class _TodayTaskScreenState extends State<TodayTaskScreen> {
                       onTap: onTap,
                       icon: Icons.arrow_back_ios_new_rounded,
                     ),
-                    const Text(
+                    Text(
                       "Today Tasks",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: theme.primaryColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
                       ),
@@ -71,8 +71,8 @@ class _TodayTaskScreenState extends State<TodayTaskScreen> {
                   children: [
                     Text(
                       "$formattedTodayDate ✍", // Use formatted date
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: theme.primaryColor,
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                       ),

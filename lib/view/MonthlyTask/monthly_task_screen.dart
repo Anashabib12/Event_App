@@ -40,10 +40,10 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                       onTap: onTap,
                       icon: Icons.arrow_back_ios_new_rounded,
                     ),
-                    const Text(
+                    Text(
                       "Monthly Tasks",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: theme.primaryColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
@@ -57,8 +57,8 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                   children: [
                     Text(
                       "${DateTime.now().dateTime}✍",
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: theme.primaryColor,
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                       ),
@@ -182,8 +182,8 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                         ),
                       ),
                       outsideDaysVisible: false,
-                      defaultTextStyle: const TextStyle(color: Colors.white),
-                      weekendTextStyle: const TextStyle(color: Colors.white),
+                      defaultTextStyle: TextStyle(color: theme.primaryColor),
+                      weekendTextStyle: TextStyle(color: theme.primaryColor),
                       selectedTextStyle:
                           TextStyle(color: theme.iconTheme.color),
                       todayTextStyle: TextStyle(color: theme.iconTheme.color),
@@ -200,9 +200,9 @@ class _MonthlyTaskScreenState extends State<MonthlyTaskScreen> {
                         fontWeight: FontWeight.w700,
                       ),
                       leftChevronIcon:
-                          const Icon(Icons.arrow_back_ios, color: Colors.white),
-                      rightChevronIcon: const Icon(Icons.arrow_forward_ios,
-                          color: Colors.white),
+                          Icon(Icons.arrow_back_ios, color: theme.primaryColor),
+                      rightChevronIcon: Icon(Icons.arrow_forward_ios,
+                          color: theme.primaryColor),
                     ),
                     calendarFormat: CalendarFormat.month,
                     daysOfWeekStyle: const DaysOfWeekStyle(
