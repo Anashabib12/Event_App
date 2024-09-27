@@ -1,9 +1,9 @@
 import 'package:event_app/Utils/Constant/colors.dart';
-import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/main_controller.dart';
+import '../../services/firebase/signin_func.dart';
 import '../signup/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -13,7 +13,6 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    print('dsssssssss');
     final controller = Get.put(MainController());
     final theme = Theme.of(context);
     final height = MediaQuery.of(context).size.height;
@@ -63,6 +62,7 @@ class LoginScreen extends StatelessWidget {
               // Email Field
               TextFormField(
                 controller: emailController,
+                style: TextStyle(color: theme.primaryColor),
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   prefixIcon:
@@ -85,15 +85,20 @@ class LoginScreen extends StatelessWidget {
 
               // Password Field
               Obx(
-                ()=> TextFormField(
+                () => TextFormField(
+                  style: TextStyle(color: theme.primaryColor),
                   controller: passController,
                   obscureText: controller.isVisible.value,
                   decoration: InputDecoration(
-                    suffixIcon:  IconButton(onPressed: (){
-                      controller.isVisibleChange();
-                    }, icon: controller.isVisible.value
-                        ? Icon(Icons.visibility_off,color: theme.primaryColor,size: 23)
-                        : Icon(Icons.visibility,color: theme.primaryColor,size: 23)),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          controller.isVisibleChange();
+                        },
+                        icon: controller.isVisible.value
+                            ? Icon(Icons.visibility_off,
+                                color: theme.primaryColor, size: 23)
+                            : Icon(Icons.visibility,
+                                color: theme.primaryColor, size: 23)),
                     prefixIcon:
                         const Icon(Icons.lock_outline, color: Colors.grey),
                     hintText: 'Enter your password',
@@ -134,8 +139,8 @@ class LoginScreen extends StatelessWidget {
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.offAll(()=> const CustomBottomNavigation());
-                    // _signInUser(context);
+                    // Get.offAll(() => const CustomBottomNavigation());
+                    _signInUser(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.iconTheme.color,
@@ -145,22 +150,25 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: const Text(
                     'Sign In',
-                    style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
               SizedBox(height: height * 0.04),
 
               // Sign In with Social Accounts
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(height: 1.5,width: 50,color: Colors.grey),
-                   SizedBox(width: width * 0.02),
-                  const Text('Signin with',style: TextStyle(color: Color(0xff868D95))),
+                  Container(height: 1.5, width: 50, color: Colors.grey),
                   SizedBox(width: width * 0.02),
-                  Container(height: 1.5,width: 50,color: Colors.grey),
-
+                  const Text('Signin with',
+                      style: TextStyle(color: Color(0xff868D95))),
+                  SizedBox(width: width * 0.02),
+                  Container(height: 1.5, width: 50, color: Colors.grey),
                 ],
               ),
               SizedBox(height: height * 0.04),
@@ -200,19 +208,19 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  // void _signInUser(BuildContext context) {
-  //   final email = emailController.text;
-  //   final password = passController.text;
-  //
-  //   if (email.isEmpty || password.isEmpty) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('Email and Password cannot be empty')),
-  //     );
-  //     return;
-  //   }
-  //
-  //   signIn(context, email, password);
-  // }
+  void _signInUser(BuildContext context) {
+    final email = emailController.text;
+    final password = passController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email and Password cannot be empty')),
+      );
+      return;
+    }
+
+    signIn(context, email, password);
+  }
 
   // Social Login Button Widget
   Widget _socialLoginButton(

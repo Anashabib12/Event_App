@@ -2,22 +2,22 @@ import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-import '../Utils/Constant/theme.dart';
-
 class TaskCard extends StatelessWidget {
-  const TaskCard(
-      {super.key,
-      required this.progress,
-      required this.appName,
-      required this.taskName,
-      this.dateTime,
-      this.onTap, this.colorChange,});
+  const TaskCard({
+    super.key,
+    required this.progress,
+    required this.appName,
+    required this.taskName,
+    this.dateTime,
+    this.onTap,
+    this.colorChange,
+  });
 
   final double progress;
   final String appName;
   final String taskName;
   final dateTime;
-  final onTap;
+  final VoidCallback? onTap;
   final bool? colorChange;
 
   @override

@@ -1,12 +1,13 @@
+import 'dart:convert';
 import 'package:event_app/commons/progress_card.dart';
 import 'package:event_app/commons/task_card.dart';
-import 'package:event_app/extensions/datetime.dart';
-import 'package:event_app/view/Add%20Task%20Screen/add_task_screen.dart';
-import 'package:event_app/view/TaskStatus/task_status_screen.dart';
+import 'package:event_app/model/task_model.dart';
+import 'package:event_app/view/TodayTask/today_task_screen.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +17,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Task> tasks = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+
+  // _onTap(index) {
+  //   Get.to(TaskStatusScreen(
+  //     index: index,
+  //   ));
+  // }
+
+  Future<void> _loadTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> taskList = prefs.getStringList('tasks') ?? [];
+
+    setState(() {
+      tasks = taskList.map((task) => Task.fromJson(jsonDecode(task))).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -25,7 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.symmetric(vertical: height * 0.07,horizontal: width * 0.06),
+          padding: EdgeInsets.symmetric(
+              vertical: height * 0.07, horizontal: width * 0.06),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,14 +59,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   CustomApButton(
                     onTap: () {
-                      Get.to(const AddTaskScreen());
+                      Get.to(const TodayTaskScreen());
                     },
                     icon: Iconsax.category,
                   ),
-                  // Center(child: Text('Friday, 26',style: TextStyle(color: theme.primaryColor))),
                   Text(
-                    DateTime.now().dateTime ,
-                    style:  TextStyle(
+                    'Today Tasks',
+                    style: TextStyle(
                       color: theme.primaryColor,
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
@@ -50,9 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   CustomApButton(onTap: () {}, icon: Iconsax.notification),
                 ],
               ),
-              const SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               Text(
                 "Let’s make a \nhabit together 🙌",
                 style: TextStyle(
@@ -63,7 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               SizedBox(
                 height: 150,
-                // Adjust height based on your UI needs
                 child: ListView.builder(
                   itemCount: 4,
                   scrollDirection: Axis.horizontal,
@@ -93,37 +114,38 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: theme.primaryColor,
                         fontWeight: FontWeight.w800),
                   ),
-                  Icon(Icons.arrow_forward_ios, color: theme.primaryColor)
+                  Icon(Icons.arrow_forward_ios, color: theme.primaryColor),
                 ],
               ),
-              TaskCard(
-                  progress: 0.9,
-                  appName: 'Productivity Mobile App',
-                  taskName: 'Create Detail Booking',
-                  dateTime: '2 Mins Ago',
-                  onTap: () {
-                    setState(() {
-                      Get.to(const TaskStatusScreen());
-                    });
-                  }),
-              const TaskCard(
-                progress: 0.8,
-                appName: 'Productivity Mobile App',
-                taskName: 'Create Detail Booking',
-                dateTime: '2 Mins Ago',
-              ),
-              const TaskCard(
-                progress: 0.75,
-                appName: 'Productivity Mobile App',
-                taskName: 'Create Detail Booking',
-                dateTime: '2 Mins Ago',
-              ),
-              const TaskCard(
-                progress: 0.7,
-                appName: 'Productivity Mobile App',
-                taskName: 'Create Detail Booking',
-                dateTime: '2 Mins Ago',
-              ),
+              // Display existing TaskCards
+              // TaskCard(
+              //     progress: 0.9,
+              //     appName: 'Productivity Mobile App',
+              //     taskName: 'Create Detail Booking',
+              //     dateTime: '2 Mins Ago',
+              //     onTap: () {
+              //       Get.to(const TaskStatusScreen());
+              //     }),
+
+              const SizedBox(height: 20),
+              // Show tasks from SharedPreferences
+              tasks.isEmpty
+                  ? const Center(child: Text('No tasks available'))
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: tasks.length,
+                      itemBuilder: (context, index) {
+                        final task = tasks[index];
+                        return TaskCard(
+                            progress: 0.0,
+                            // onTap: _onTap(index),
+                            dateTime:
+                                '${task.date}\nStart: ${task.timeStart} - End: ${task.timeEnd}',
+                            appName: task.taskName,
+                            taskName: task.taskName);
+                      },
+                    ),
             ],
           ),
         ),

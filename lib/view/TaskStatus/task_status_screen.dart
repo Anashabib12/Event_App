@@ -7,7 +7,12 @@ import 'package:iconsax/iconsax.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class TaskStatusScreen extends StatelessWidget {
-  const TaskStatusScreen({super.key});
+  const TaskStatusScreen({
+    super.key,
+    required this.index,
+  });
+
+  final index;
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;

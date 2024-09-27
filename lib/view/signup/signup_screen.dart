@@ -4,12 +4,11 @@ import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 // ignore: must_be_immutable
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
-final controller = Get.put(MainController());
+  final controller = Get.put(MainController());
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
@@ -61,6 +60,7 @@ final controller = Get.put(MainController());
               /// Name
               TextFormField(
                 controller: usernameController,
+                style: TextStyle(color: theme.primaryColor),
                 decoration: InputDecoration(
                   prefixIcon:
                       const Icon(Icons.person_outline, color: Colors.grey),
@@ -80,6 +80,7 @@ final controller = Get.put(MainController());
 
               /// email
               TextFormField(
+                style: TextStyle(color: theme.primaryColor),
                 controller: emailController,
                 decoration: InputDecoration(
                   prefixIcon:
@@ -100,26 +101,32 @@ final controller = Get.put(MainController());
 
               /// Password
               Obx(
-                ()=> TextFormField(
+                () => TextFormField(
+                  style: TextStyle(color: theme.primaryColor),
                   controller: passController,
                   obscureText: controller.isVisible.value,
                   decoration: InputDecoration(
-                    suffixIcon: IconButton(onPressed: (){
-                      controller.isVisibleChange();
-                    },
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          controller.isVisibleChange();
+                        },
                         icon: controller.isVisible.value
-                            ? Icon(Icons.visibility_off,color: theme.primaryColor,size: 23) : Icon(Icons.visibility,color: theme.primaryColor,size: 23)),
-                    prefixIcon: const Icon(Icons.lock_clock_outlined, color: Colors.grey),
+                            ? Icon(Icons.visibility_off,
+                                color: theme.primaryColor, size: 23)
+                            : Icon(Icons.visibility,
+                                color: theme.primaryColor, size: 23)),
+                    prefixIcon: const Icon(Icons.lock_clock_outlined,
+                        color: Colors.grey),
                     hintText: 'Enter your password',
                     hintStyle: const TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
-                        borderSide:
-                            const BorderSide(width: 2, color: Color(0xffE9F1FF))),
+                        borderSide: const BorderSide(
+                            width: 2, color: Color(0xffE9F1FF))),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide:
-                            const BorderSide(width: 2, color: Color(0xffE9F1FF))),
+                        borderSide: const BorderSide(
+                            width: 2, color: Color(0xffE9F1FF))),
                   ),
                 ),
               ),
@@ -145,12 +152,12 @@ final controller = Get.put(MainController());
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(height: 1.5,width: 50,color: Colors.grey),
+                  Container(height: 1.5, width: 50, color: Colors.grey),
                   SizedBox(width: width * 0.02),
-                  const Text('Signup with',style: TextStyle(color: Color(0xff868D95))),
+                  const Text('Signup with',
+                      style: TextStyle(color: Color(0xff868D95))),
                   SizedBox(width: width * 0.02),
-                  Container(height: 1.5,width: 50,color: Colors.grey),
-
+                  Container(height: 1.5, width: 50, color: Colors.grey),
                 ],
               ),
 
