@@ -1,5 +1,6 @@
 import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:event_app/commons/bottom_navigation.dart';
+import 'package:event_app/controllers/main_controller.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:event_app/widgets/filters.dart';
 import 'package:flutter/material.dart';
@@ -152,172 +153,153 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
+    final isSelected = Get.put(MainController());
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: width * 0.06, vertical: height * 0.07),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  CustomApButton(
-                    onTap: () {
-                      Get.back();
-                    },
-                    icon: Icons.arrow_back_ios_rounded,
-                  ),
-                  SizedBox(width: width * 0.2),
-                  Text('Add Task',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
-                        color: theme.primaryColor,
-                      ))
-                ],
-              ),
-              SizedBox(height: height * 0.04),
-              const Text('Task Name',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 17,
-                  )),
-              SizedBox(height: height * 0.02),
-              TextFormField(
-                controller: _taskNameController,
-                decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.only(top: height * 0.05, left: 15, right: 10),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xffE9F1FF))),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xffE9F1FF))),
-                ),
-              ),
-              SizedBox(height: height * 0.02),
-              const Text('Team Member',
-                  style: TextStyle(color: Colors.grey, fontSize: 17)),
-              SizedBox(height: height * 0.02),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: width * 0.06, vertical: height * 0.07),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    const CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            AssetImage('Assets/person/Ellipse@2x.png')),
-                    SizedBox(width: width * 0.04),
-                    const CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            AssetImage('Assets/person/Ellipse (1).png')),
-                    SizedBox(width: width * 0.04),
-                    const CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            AssetImage('Assets/person/Group 1000000746.png')),
-                    SizedBox(width: width * 0.04),
-                    const CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            AssetImage('Assets/person/Ellipse.png')),
-                    SizedBox(width: width * 0.02),
-                    Container(
-                      height: height * 0.07,
-                      width: width * 0.13,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: AColors.primaryLight),
-                          shape: BoxShape.circle),
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.add,
-                            color: AColors.primaryLight,
-                            size: 28,
-                          )),
-                    )
+                    CustomApButton(
+                      onTap: () {
+                        Get.back();
+                      },
+                      icon: Icons.arrow_back_ios_rounded,
+                    ),
+                    SizedBox(width: width * 0.2),
+                    Text('Add Task',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                          color: theme.primaryColor,
+                        ))
                   ],
                 ),
-              ),
-              SizedBox(height: height * 0.001),
-              Row(
-                children: [
-                  SizedBox(width: width * 0.02),
-                  const Text('Jeny',
-                      style: TextStyle(color: Colors.grey, fontSize: 17)),
-                  SizedBox(width: width * 0.09),
-                  const Text('Jafor',
-                      style: TextStyle(color: Colors.grey, fontSize: 17)),
-                  SizedBox(width: width * 0.08),
-                  const Text('Avishek',
-                      style: TextStyle(color: Colors.grey, fontSize: 17)),
-                  SizedBox(width: width * 0.05),
-                  const Text('mehrin',
-                      style: TextStyle(color: Colors.grey, fontSize: 17)),
-                ],
-              ),
-              SizedBox(height: height * 0.03),
-              const Text('Date',
-                  style: TextStyle(color: Colors.grey, fontSize: 17)),
-              SizedBox(height: height * 0.02),
-              TextFormField(
-                controller: _dateController,
-                decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.only(top: height * 0.05, left: 15, right: 10),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xffE9F1FF))),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xffE9F1FF))),
-                ),
-                onTap: () => _selectDate(context),
-              ),
-              SizedBox(height: height * 0.03),
-              Row(
-                children: [
-                  const Text('Start Time',
-                      style: TextStyle(color: Colors.grey, fontSize: 17)),
-                  SizedBox(width: width * 0.28),
-                  const Text('End Time',
-                      style: TextStyle(color: Colors.grey, fontSize: 17)),
-                ],
-              ),
-              SizedBox(height: height * 0.02),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _timeStartController,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                            top: height * 0.05, left: 15, right: 10),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                                width: 2, color: Color(0xffE9F1FF))),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                                width: 2, color: Color(0xffE9F1FF))),
-                      ),
-                      onTap: () => _selectStartTime(context),
-                    ),
+                SizedBox(height: height * 0.04),
+                const Text('Task Name',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 17,
+                    )),
+                SizedBox(height: height * 0.02),
+                TextFormField(
+                  controller: _taskNameController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide:
+                            const BorderSide(width: 2, color: Color(0xffE9F1FF))),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide:
+                            const BorderSide(width: 2, color: Color(0xffE9F1FF))),
                   ),
-                  SizedBox(width: width * 0.07),
-                  Expanded(
-                    child: TextFormField(
-                        controller: _timeEndController,
+                ),
+                SizedBox(height: height * 0.02),
+                const Text('Team Member',
+                    style: TextStyle(color: Colors.grey, fontSize: 17)),
+                SizedBox(height: height * 0.02),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      const CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                              AssetImage('Assets/person/Ellipse@2x.png')),
+                      SizedBox(width: width * 0.04),
+                      const CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                              AssetImage('Assets/person/Ellipse (1).png')),
+                      SizedBox(width: width * 0.04),
+                      const CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                              AssetImage('Assets/person/Group 1000000746.png')),
+                      SizedBox(width: width * 0.04),
+                      const CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                              AssetImage('Assets/person/Ellipse.png')),
+                      SizedBox(width: width * 0.02),
+                      Container(
+                        height: height * 0.07,
+                        width: width * 0.13,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: AColors.primaryLight),
+                            shape: BoxShape.circle),
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.add,
+                              color: AColors.primaryLight,
+                              size: 28,
+                            )),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: height * 0.001),
+                Row(
+                  children: [
+                    SizedBox(width: width * 0.02),
+                    const Text('Jeny',
+                        style: TextStyle(color: Colors.grey, fontSize: 17)),
+                    SizedBox(width: width * 0.09),
+                    const Text('Jafor',
+                        style: TextStyle(color: Colors.grey, fontSize: 17)),
+                    SizedBox(width: width * 0.08),
+                    const Text('Avishek',
+                        style: TextStyle(color: Colors.grey, fontSize: 17)),
+                    SizedBox(width: width * 0.05),
+                    const Text('mehrin',
+                        style: TextStyle(color: Colors.grey, fontSize: 17)),
+                  ],
+                ),
+                SizedBox(height: height * 0.03),
+                const Text('Date',
+                    style: TextStyle(color: Colors.grey, fontSize: 17)),
+                SizedBox(height: height * 0.02),
+                TextFormField(
+                  controller: _dateController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide:
+                            const BorderSide(width: 2, color: Color(0xffE9F1FF))),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide:
+                            const BorderSide(width: 2, color: Color(0xffE9F1FF))),
+                  ),
+                  onTap: () => _selectDate(context),
+                ),
+                SizedBox(height: height * 0.03),
+                Row(
+                  children: [
+                    const Text('Start Time',
+                        style: TextStyle(color: Colors.grey, fontSize: 17)),
+                    SizedBox(width: width * 0.28),
+                    const Text('End Time',
+                        style: TextStyle(color: Colors.grey, fontSize: 17)),
+                  ],
+                ),
+                SizedBox(height: height * 0.02),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _timeStartController,
                         decoration: InputDecoration(
+
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: const BorderSide(
@@ -327,37 +309,135 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               borderSide: const BorderSide(
                                   width: 2, color: Color(0xffE9F1FF))),
                         ),
-                        onTap: () => _selectEndTime(context)),
-                  ),
-                ],
-              ),
-              SizedBox(height: height * 0.03),
-              const Text('Board',
-                  style: TextStyle(color: Colors.grey, fontSize: 17)),
-              SizedBox(height: height * 0.01),
+                        onTap: () => _selectStartTime(context),
+                      ),
+                    ),
+                    SizedBox(width: width * 0.07),
+                    Expanded(
+                      child: TextFormField(
+                          controller: _timeEndController,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    width: 2, color: Color(0xffE9F1FF))),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    width: 2, color: Color(0xffE9F1FF))),
+                          ),
+                          onTap: () => _selectEndTime(context)),
+                    ),
+                  ],
+                ),
+                SizedBox(height: height * 0.03),
+                const Text('Board',
+                    style: TextStyle(color: Colors.grey, fontSize: 17)),
+                SizedBox(height: height * 0.01),
 
-              const Center(
-                child: Filters(),
-              ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: (){
+                          isSelected.selectedIndex.value =0;
+                        },
+                        child: Obx(
+                          ()=> Container(
+                            height: height * 0.05,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  width: isSelected.selectedIndex.value == 0 ? 3 : 1,
+                                    color: isSelected.selectedIndex.value == 0
+                                        ? theme.iconTheme.color! : Colors.grey)),
+                            child:  Center(
+                              child: Text('Urgent',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,
+                                    color: isSelected.selectedIndex.value == 0
+                                        ? Colors.black : AColors.grey                              ))),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: width*0.02),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: (){
+                          isSelected.selectedIndex.value =1;
+                        },
+                        child: Obx(
+                          ()=> Container(
+                            height: height * 0.05,
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    width: isSelected.selectedIndex.value == 1
+                                        ? 3 : 1,
+                                    color: isSelected.selectedIndex.value == 1
+                                        ? theme.iconTheme.color! : Colors.grey)
+                            ),
+                            child:  Center(
+                              child: Text('Running',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,
+                              color: isSelected.selectedIndex.value ==1
+                                  ? Colors.black : AColors.grey
+                              ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: (){
+                          isSelected.selectedIndex.value = 2;
+                        },
+                        child: Obx(
+                          ()=> Container(
+                            height: height * 0.05,
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    width: isSelected.selectedIndex.value == 2? 3 :1,
+                                    color: isSelected.selectedIndex.value ==2
+                                        ? theme.iconTheme.color! : Colors.grey)),
+                            child:  Center(
+                              child: Text('ongoing' ,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,
+                                  color: isSelected.selectedIndex.value == 2
+                                      ? Colors.black : AColors.grey                        ))),
+                          ),
+                        ),
+                      ),
+                    ),
 
-              SizedBox(height: height * 0.06),
+                  ],
+                ),
+                SizedBox(height: height * 0.04),
 
-              // Submit Button
-              Center(
-                child: SizedBox(
-                    width: width * 0.6,
-                    height: height * 0.06,
-                    child: ElevatedButton(
-                        onPressed: _saveTask,
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: theme.iconTheme.color,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12))),
-                        child: const Text('Save',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 17)))),
-              ),
-            ],
+                // Submit Button
+                Center(
+                  child: SizedBox(
+                      width: width * 0.6,
+                      height: height * 0.06,
+                      child: ElevatedButton(
+                          onPressed: _saveTask,
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: theme.iconTheme.color,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12))),
+                          child: const Text('Save',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 17)))),
+                ),
+              ],
+            ),
           ),
         ),
       ),

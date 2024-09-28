@@ -16,7 +16,7 @@ Rx<bool> isVisible = true.obs;
     isVisible.value = !isVisible.value;
   }
 
-  var selectedIndex = 0.obs; // Observable variable to track selected index
+  var selectedIndex = 1.obs; // Observable variable to track selected index
 
   // Function to update the selected index
   void updateIndex(int index) {
