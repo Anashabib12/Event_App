@@ -37,27 +37,27 @@ Features
 
 ## Installation
 
-#### To run Taskcy locally, follow these steps:
+### To run Taskcy locally, follow these steps:
 
- Clone the repository:
+ #### Clone the repository:
 
     git clone https://github.com/Anashabib12/Event_App.git
 
-Navigate to the project directory:
+#### Navigate to the project directory:
 
     cd taskcy
 
-Install the required dependencies:
+#### Install the required dependencies:
 
     flutter pub get
 
-Set up Firebase:
+#### Set up Firebase:
 
   Create a Firebase project and add the necessary configuration files (Google Services JSON/Plist) to the android and ios directories.
   
   Enable Firebase Authentication and Firestore in your Firebase project.
 
-Run the app:
+#### Run the app:
 
     flutter run
 
