@@ -1,4 +1,3 @@
-import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/firebase_options.dart';
 import 'package:event_app/services/auth/auth_gate.dart';
 import 'package:flutter/material.dart';

@@ -20,7 +20,6 @@ class TaskStatusScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
     // Calculate the progress percentage for CircularPercentIndicator
-    final progressPercentage = (task.progress * 100).toInt();
 
     return Scaffold(
       body: SingleChildScrollView(
