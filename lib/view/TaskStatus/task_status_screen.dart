@@ -1,4 +1,5 @@
 import 'package:event_app/Utils/Constant/colors.dart';
+import 'package:event_app/model/task_model.dart';
 
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
@@ -9,15 +10,18 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 class TaskStatusScreen extends StatelessWidget {
   const TaskStatusScreen({
     super.key,
-    required this.index,
+    required this.task,
   });
 
-  final index;
+  final Task task;
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
+    // Calculate the progress percentage for CircularPercentIndicator
+    final progressPercentage = (task.progress * 100).toInt();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -44,20 +48,19 @@ class TaskStatusScreen extends StatelessWidget {
                       onTap: () {}, icon: Iconsax.arrow_swap_horizontal),
                 ],
               ),
-
               SizedBox(height: height * 0.06),
 
-              /// Circle Person Indicator
+              /// Circle Person Indicator (with dynamic progress)
               CircularPercentIndicator(
                 radius: 100.0,
                 lineWidth: 25.0,
                 animation: true,
-                percent: 0.65,
+                percent: task.progress / 100, // Use dynamic task progress
                 center: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("65%",
+                      Text("${task.progress}%",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
@@ -74,7 +77,6 @@ class TaskStatusScreen extends StatelessWidget {
                 footer: Padding(
                   padding: EdgeInsets.only(top: height * 0.04),
                   child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       SizedBox(width: width * 0.05),
                       CircleAvatar(
@@ -204,79 +206,10 @@ class TaskStatusScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              // Expanded(
-              //   child: ListView(
-              //     children: [
-              //       _buildTaskCategory("Completed", "18 Task now", "18 Task Completed", true),
-              //         _buildTaskCategory("In Progress", "2 Task now", "1 started", false),
-              //         _buildTaskCategory("To Do", "2 Task now", "1 Upcoming", false),              ],
-              //   ),
-              // ),
             ],
           ),
         ),
       ),
     );
-    // Method to build the status indicator for To Do, In Progress, Completed
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:percent_indicator/circular_percent_indicator.dart';
-//
-// class TaskStatusScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         leading: Icon(Icons.arrow_back),
-//         title: Text('Task Status'),
-//         actions: [
-//           IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
-//         ],
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             // Circular Progress Indicator
-//
-//             Expanded(
-//               child: ListView(
-//                 children: [
-//                   _buildTaskCategory("Completed", "18 Task now", "18 Task Completed", true),
-//                   _buildTaskCategory("In Progress", "2 Task now", "1 started", false),
-//                   _buildTaskCategory("To Do", "2 Task now", "1 Upcoming", false),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//
-//
-//
-//   // Method to build each task category (Completed, In Progress, To Do)
-//   Widget _buildTaskCategory(String title, String taskNow, String taskDetails, bool isCompleted) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 8.0),
-//       child: Container(
-//         padding: EdgeInsets.all(16.0),
-//         decoration: BoxDecoration(
-//           border: isCompleted ? Border.all(color: Colors.blueAccent) : null,
-//           borderRadius: BorderRadius.circular(10.0),
-//         ),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-//             SizedBox(height: 5),
-//             Text("$taskNow now • $taskDetails"),
-//           ],
-//         ),
-//       ),
-//     );
-//   }

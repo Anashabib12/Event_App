@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:event_app/commons/progress_card.dart';
 import 'package:event_app/commons/task_card.dart';
 import 'package:event_app/model/task_model.dart';
+import 'package:event_app/view/TaskStatus/task_status_screen.dart';
 import 'package:event_app/view/TodayTask/today_task_screen.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
@@ -18,26 +20,67 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Task> tasks = [];
+  Timer? _progressTimer;
 
   @override
   void initState() {
     super.initState();
     _loadTasks();
+    _startProgressTimer();
   }
 
-  // _onTap(index) {
-  //   Get.to(TaskStatusScreen(
-  //     index: index,
-  //   ));
-  // }
+  void _startProgressTimer() {
+    _progressTimer = Timer.periodic(const Duration(seconds: 2), (timer) async {
+      for (var task in tasks) {
+        if (task.progress < 100) {
+          setState(() {
+            task.progress += 1; // Increase progress by 10%
+            if (task.progress > 100) task.progress = 100; // Cap to 100%
+          });
+
+          // Persist updated task progress
+          await _saveTasks();
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _progressTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onTap(Task task) {
+    Get.to(TaskStatusScreen(task: task));
+  }
 
   Future<void> _loadTasks() async {
     final prefs = await SharedPreferences.getInstance();
-    List<String> taskList = prefs.getStringList('tasks') ?? [];
+    List<String>? taskList = prefs.getStringList('tasks');
 
     setState(() {
-      tasks = taskList.map((task) => Task.fromJson(jsonDecode(task))).toList();
+      if (taskList != null) {
+        tasks = taskList
+            .map((task) {
+              try {
+                return Task.fromJson(jsonDecode(task));
+              } catch (e) {
+                print('Error decoding task: $e');
+                return null;
+              }
+            })
+            .whereType<Task>()
+            .toList();
+      }
     });
+  }
+
+  Future<void> _saveTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> taskList =
+        tasks.map((task) => jsonEncode(task.toJson())).toList();
+    await prefs.setStringList('tasks', taskList);
   }
 
   @override
@@ -117,20 +160,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icon(Icons.arrow_forward_ios, color: theme.primaryColor),
                 ],
               ),
-              // Display existing TaskCards
-              // TaskCard(
-              //     progress: 0.9,
-              //     appName: 'Productivity Mobile App',
-              //     taskName: 'Create Detail Booking',
-              //     dateTime: '2 Mins Ago',
-              //     onTap: () {
-              //       Get.to(const TaskStatusScreen());
-              //     }),
-
               const SizedBox(height: 20),
               // Show tasks from SharedPreferences
               tasks.isEmpty
-                  ? const Center(child: Text('No tasks available'))
+                  ? Center(
+                      child: Text(
+                        'No tasks available',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: theme.primaryColor,
+                            fontWeight: FontWeight.w800),
+                      ),
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -138,12 +179,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         final task = tasks[index];
                         return TaskCard(
-                            progress: 0.0,
-                            // onTap: _onTap(index),
-                            dateTime:
-                                '${task.date}\nStart: ${task.timeStart} - End: ${task.timeEnd}',
-                            appName: task.taskName,
-                            taskName: task.taskName);
+                          progress: task.progress / 100.0, // Link progress here
+                          appName: task.taskName,
+                          taskName: task.taskName,
+                          dateTime:
+                              '${task.date}\nStart: ${task.timeStart} - End: ${task.timeEnd}',
+                          onTap: () {
+                            _onTap(task); // Navigate to TaskStatusScreen
+                          },
+                        );
                       },
                     ),
             ],

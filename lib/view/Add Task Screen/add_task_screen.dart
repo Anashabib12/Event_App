@@ -1,6 +1,7 @@
 import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
+import 'package:event_app/widgets/filters.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -334,60 +335,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               const Text('Board',
                   style: TextStyle(color: Colors.grey, fontSize: 17)),
               SizedBox(height: height * 0.01),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(right: 10),
-                      height: height * 0.06,
-                      width: width * 0.28,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey)),
-                      child: const Center(
-                          child: Text(
-                        'Urgent',
-                        style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey),
-                      )),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(right: 10),
-                      height: height * 0.06,
-                      width: width * 0.28,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey)),
-                      child: const Center(
-                          child: Text(
-                        'Running',
-                        style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey),
-                      )),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(right: 10),
-                      height: height * 0.06,
-                      width: width * 0.28,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey)),
-                      child: const Center(
-                          child: Text(
-                        'ongoing',
-                        style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey),
-                      )),
-                    ),
-                  ],
-                ),
+
+              const Center(
+                child: Filters(),
               ),
 
               SizedBox(height: height * 0.06),

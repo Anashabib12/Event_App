@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:event_app/extensions/datetime.dart';
 import 'package:event_app/model/task_model.dart';
 import 'package:event_app/view/MonthlyTask/monthly_task_screen.dart';
@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widgets/custom_ap_button.dart';
+import '../../widgets/task_custom_container.dart';
 
 class TodayTaskScreen extends StatefulWidget {
   const TodayTaskScreen({super.key});
@@ -28,12 +29,35 @@ class _TodayTaskScreenState extends State<TodayTaskScreen> {
   }
 
   Future<void> _loadTasks() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> taskList = prefs.getStringList('tasks') ?? [];
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      List<String>? taskList = prefs.getStringList('tasks');
 
-    setState(() {
-      tasks = taskList.map((task) => Task.fromJson(jsonDecode(task))).toList();
-    });
+      if (taskList != null) {
+        setState(() {
+          tasks = taskList
+              .map((task) {
+                try {
+                  return Task.fromJson(jsonDecode(task));
+                } catch (e) {
+                  print('Error decoding task: $e');
+                  return null;
+                }
+              })
+              .whereType<Task>()
+              .toList(); // Filter out any null tasks
+        });
+      }
+    } catch (e) {
+      print('Error loading tasks: $e');
+    }
+  }
+
+  Future<void> _saveTasks() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> taskList =
+        tasks.map((task) => jsonEncode(task.toJson())).toList();
+    await prefs.setStringList('tasks', taskList);
   }
 
   void onTap() {
@@ -42,209 +66,182 @@ class _TodayTaskScreenState extends State<TodayTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
+
+    // Format the date for today's display
     String formattedTodayDate = DateFormat('dd MMMM ').format(DateTime.now());
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor, // Dark background
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+        child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top Row with Back and Edit buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomApButton(
-                    onTap: onTap,
-                    icon: Icons.arrow_back_ios_new_rounded,
-                  ),
-                  Text(
-                    "Today Tasks",
-                    style: TextStyle(
-                      color: theme.primaryColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  CustomApButton(onTap: onTap, icon: Iconsax.edit_2),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "$formattedTodayDate ✍",
-                    style: TextStyle(
-                      color: theme.primaryColor,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  CustomApButton(
-                    icon: Iconsax.calendar_1,
-                    onTap: () {
-                      Get.to(const MonthlyTaskScreen());
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4),
-              const Row(
-                children: [
-                  Text(
-                    "15 tasks today",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              // Horizontal Date Selector Row
-              SizedBox(
-                height: 118,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    DateTime date = DateTime.now().add(Duration(days: index));
-                    String formattedDate = DateFormat('dd').format(date);
-                    String dayOfWeek = DateFormat('EEE').format(date);
-                    bool isToday = date.isSameDate(DateTime.now());
-
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 118,
-                        width: 64,
-                        margin: const EdgeInsets.only(right: 4),
-                        decoration: BoxDecoration(
-                          color: isToday
-                              ? theme.iconTheme.color
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: isToday
-                                ? Colors.transparent
-                                : Colors.grey.withOpacity(0.5),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: width * 0.05,
+                    right: width * 0.05,
+                    top: height * 0.06),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Top Row with Back Button and Edit Button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomApButton(
+                          onTap: onTap,
+                          icon: Icons.arrow_back_ios_new_rounded,
+                        ),
+                        Text(
+                          "Today Tasks",
+                          style: TextStyle(
+                            color: theme.primaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              formattedDate,
-                              style: TextStyle(
-                                color: isToday
-                                    ? Colors.white
-                                    : Colors.grey.withOpacity(0.8),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 25,
-                              ),
-                            ),
-                            Text(
-                              dayOfWeek,
-                              style: TextStyle(
-                                color: isToday
-                                    ? Colors.white
-                                    : Colors.grey.withOpacity(0.8),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
+                        CustomApButton(onTap: onTap, icon: Iconsax.edit_2),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+
+                    // Today's Date and Calendar Button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "$formattedTodayDate ✍", // Use formatted date
+                          style: TextStyle(
+                            color: theme.primaryColor,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              tasks.isEmpty
-                  ? Text(
-                      "No Tasks Avaiable",
-                      style: TextStyle(color: theme.primaryColor),
-                    )
-                  : Expanded(
-                      child: ListView.separated(
-                        itemCount: tasks.length,
-                        separatorBuilder: (context, index) =>
-                            Divider(color: Colors.grey.withOpacity(0.4)),
+                        CustomApButton(
+                          icon: Iconsax.calendar_1,
+                          onTap: () {
+                            Get.to(const MonthlyTaskScreen());
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: height * 0.01),
+
+                    // Task Count Row
+                    Row(
+                      children: [
+                        Text("${tasks.length} tasks today",
+                            style:
+                                TextStyle(color: AColors.grey, fontSize: 16)),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Horizontal Date Selector Row
+                    SizedBox(
+                      height: 118,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 6, // Showing 6 upcoming dates
                         itemBuilder: (context, index) {
-                          final task = tasks[index];
-                          return Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      task.timeStart,
-                                      style: TextStyle(
-                                        color: theme.primaryColor,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                      ),
+                          DateTime date =
+                              DateTime.now().add(Duration(days: index));
+                          String formattedDate =
+                              DateFormat('dd').format(date); // Get day number
+                          String dayOfWeek = DateFormat('EEE')
+                              .format(date); // Get short day name
+                          bool isToday = date.isSameDate(
+                              DateTime.now()); // Check if it's today
+
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 118,
+                              width: 64,
+                              margin: const EdgeInsets.only(right: 4),
+                              decoration: BoxDecoration(
+                                color: isToday
+                                    ? theme.iconTheme.color
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: isToday
+                                      ? Colors.transparent
+                                      : Colors.grey.withOpacity(0.5),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    formattedDate,
+                                    style: TextStyle(
+                                      color: isToday
+                                          ? Colors.white
+                                          : Colors.grey.withOpacity(0.8),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 25,
                                     ),
-                                    const SizedBox(height: 4),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xffb9e8ff1a),
-                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        task.taskName,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const CircleAvatar(
-                                            backgroundImage: AssetImage(
-                                                "assets/person/Ellipse (1).png"),
-                                            radius: 18,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Expanded(
-                                            child: Text(
-                                              '${task.date}\nStart: ${task.timeStart} - End: ${task.timeEnd}',
-                                              style: TextStyle(
-                                                color: theme.primaryColor,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              overflow: TextOverflow
-                                                  .visible, // Prevent overflow
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                  Text(
+                                    dayOfWeek,
+                                    style: TextStyle(
+                                      color: isToday
+                                          ? Colors.white
+                                          : Colors.grey.withOpacity(0.8),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           );
                         },
                       ),
+                    ),
+
+                    SizedBox(height: height * 0.04),
+
+                    // Divider Line
+                    Divider(color: AColors.grey.withOpacity(0.3)),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: height * 0.02),
+
+              // Show tasks from SharedPreferences
+              tasks.isEmpty
+                  ? Center(
+                      child: Text(
+                        'No tasks available',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: theme.primaryColor,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: tasks.length,
+                      itemBuilder: (context, index) {
+                        final task = tasks[index];
+                        return TaskCustomBox(
+                          startTime: task.timeStart,
+                          endTime: task.timeEnd,
+                          backGroundColor: const Color(0xff63B4FF),
+                          title: task.taskName,
+                        );
+                      },
                     ),
             ],
           ),
