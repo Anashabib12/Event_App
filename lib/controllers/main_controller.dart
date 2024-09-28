@@ -1,41 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MainController extends GetxController {
   var isDark = false.obs;
-  Rx<bool> isVisible = true.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    _loadTheme(); // Load the theme when the controller initializes
-  }
-
-  void _loadTheme() async {
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      isDark.value = prefs.getBool('darkMode') ?? false;
-      Get.changeThemeMode(isDark.value ? ThemeMode.dark : ThemeMode.light);
-    } catch (e) {
-      // Handle any errors here (e.g., log them)
-    }
-  }
-
-  void changeTheme() async {
+  void changeTheme() {
     isDark.value = !isDark.value;
     Get.changeThemeMode(isDark.value ? ThemeMode.dark : ThemeMode.light);
-
-    try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(
-          'darkMode', isDark.value); // Save the theme preference
-    } catch (e) {
-      // Handle any errors here (e.g., log them)
-    }
   }
 
-  void isVisibleChange() {
+Rx<bool> isVisible = true.obs;
+
+
+  void isVisibleChange(){
     isVisible.value = !isVisible.value;
   }
+
+  var selectedIndex = 0.obs; // Observable variable to track selected index
+
+  // Function to update the selected index
+  void updateIndex(int index) {
+    selectedIndex.value = index;
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// RxBool isVisible = true.obs;
+//
+// // Toggle function to change the visibility state
+// void toggleVisibility() {
+//   isVisible.value = !isVisible.value;
+// }

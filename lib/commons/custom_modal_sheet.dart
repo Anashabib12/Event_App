@@ -17,7 +17,7 @@ class CustomModalSheet extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
-      height: height * 0.5,
+      height: height * 0.44,
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         borderRadius: const BorderRadius.only(
@@ -65,7 +65,7 @@ class CustomModalSheet extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const CustomContainer(icon: Iconsax.clock, text: "Create Event"),
-              SizedBox(height: height * 0.01),
+              SizedBox(height: height * 0.03),
               CircleAvatar(
                   radius: 25,
                   backgroundColor: AColors.primary,

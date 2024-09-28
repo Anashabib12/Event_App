@@ -46,7 +46,7 @@ class _FiltersState extends State<Filters> {
                     filters[index],
                     style: TextStyle(
                       color: isSelected
-                          ? Colors.white
+                          ? theme.primaryColor
                           : Colors.grey.withOpacity(0.4),
                       fontSize: 16,
                     ),
