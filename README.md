@@ -1,5 +1,9 @@
 # Taskcy - Task Management App
 
+
+#### A convenient and user-friendly platform to manage daily life Tasks.
+
+
 ## Overview
 
 Taskcy is a powerful and intuitive task management app that helps users stay organized, productive, and connected. It combines task management with real-time chat, enabling collaboration while keeping track of important tasks.
