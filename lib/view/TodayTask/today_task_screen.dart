@@ -53,13 +53,6 @@ class _TodayTaskScreenState extends State<TodayTaskScreen> {
     }
   }
 
-  Future<void> _saveTasks() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> taskList =
-        tasks.map((task) => jsonEncode(task.toJson())).toList();
-    await prefs.setStringList('tasks', taskList);
-  }
-
   void onTap() {
     Get.back();
   }
