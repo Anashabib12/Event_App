@@ -9,25 +9,25 @@
 Taskcy is a powerful and intuitive task management app that helps users stay organized, productive, and connected. It combines task management with real-time chat, enabling collaboration while keeping track of important tasks.
 Features
 
-  User Authentication: Secure login and sign-up using Firebase Authentication.
+• User Authentication: Secure login and sign-up using Firebase Authentication.
     
-  Task Management: Add, edit, delete, and manage tasks efficiently.
+• Task Management: Add, edit, delete, and manage tasks efficiently.
     
-  Task Categories & Priorities: Organize tasks by categories (e.g., Work, Personal) and set priorities to focus on important tasks first.
+• Task Categories & Priorities: Organize tasks by categories (e.g., Work, Personal) and set priorities to focus on important tasks first.
   
-  Task Status: Mark tasks as completed or pending with a simple toggle.
+• Task Status: Mark tasks as completed or pending with a simple toggle.
   
-  Reminders & Notifications: Set task reminders and get notified before deadlines.
+• Reminders & Notifications: Set task reminders and get notified before deadlines.
   
-  Chat Feature: Built-in chat using Firestore, allowing real-time messaging with other users for collaboration.
+• Chat Feature: Built-in chat using Firestore, allowing real-time messaging with other users for collaboration.
   
-  Dark Mode: Full support for dark mode for a comfortable user experience in low-light environments.
+• Dark Mode: Full support for dark mode for a comfortable user experience in low-light environments.
   
-  Data Persistence: Uses SharedPreferences for storing tasks locally.
+• Data Persistence: Uses SharedPreferences for storing tasks locally.
   
-  State Management: Managed with GetX for efficient and responsive UI updates.
+• State Management: Managed with GetX for efficient and responsive UI updates.
   
-  Responsive Design: Fully responsive, optimized for mobile and tablet devices.
+• Responsive Design: Fully responsive, optimized for mobile and tablet devices.
   
 
 ## Screenshots
@@ -63,19 +63,19 @@ Features
 
 ## Tech Stack
 
-  Frontend: Flutter
+• Frontend: Flutter
   
-  State Management: GetX
+• State Management: GetX
   
-  Authentication: Firebase Authentication
+• Authentication: Firebase Authentication
   
-  Chat: Firestore for real-time messaging
+• Chat: Firestore for real-time messaging
   
-  Task Storage: SharedPreferences for local storage
+• Task Storage: SharedPreferences for local storage
   
-  Backend: Firebase Firestore for chat functionality
+• Backend: Firebase Firestore for chat functionality
   
-  UI/UX: Clean and modern design with both light and dark mode support
+• UI/UX: Clean and modern design with both light and dark mode support
   
 
 ## Contributing
