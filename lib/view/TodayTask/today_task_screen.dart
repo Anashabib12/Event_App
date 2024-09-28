@@ -3,6 +3,7 @@ import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:event_app/extensions/datetime.dart';
 import 'package:event_app/model/task_model.dart';
 import 'package:event_app/view/MonthlyTask/monthly_task_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -40,7 +41,9 @@ class _TodayTaskScreenState extends State<TodayTaskScreen> {
                 try {
                   return Task.fromJson(jsonDecode(task));
                 } catch (e) {
-                  print('Error decoding task: $e');
+                  if (kDebugMode) {
+                    print('Error decoding task: $e');
+                  }
                   return null;
                 }
               })
@@ -49,7 +52,9 @@ class _TodayTaskScreenState extends State<TodayTaskScreen> {
         });
       }
     } catch (e) {
-      print('Error loading tasks: $e');
+      if (kDebugMode) {
+        print('Error loading tasks: $e');
+      }
     }
   }
 
