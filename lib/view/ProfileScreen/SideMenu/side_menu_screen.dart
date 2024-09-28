@@ -178,22 +178,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
               ),
               SizedBox(height: height* 0.06),
 
-              SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        signOut(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.iconTheme.color,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
-                      child: const Text(
-                        "Log Out",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                      ))),
+
             ],
           ),
         ),

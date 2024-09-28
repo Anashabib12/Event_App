@@ -190,6 +190,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     )),
                 SizedBox(height: height * 0.02),
                 TextFormField(
+                  style: TextStyle(color: theme.primaryColor),
                   controller: _taskNameController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -220,16 +221,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           backgroundImage:
                               AssetImage('Assets/person/Ellipse (1).png')),
                       SizedBox(width: width * 0.04),
-                      const CircleAvatar(
-                          radius: 30,
-                          backgroundImage:
-                              AssetImage('Assets/person/Group 1000000746.png')),
-                      SizedBox(width: width * 0.04),
+                      // const CircleAvatar(
+                      //     radius: 30,
+                      //     backgroundImage:
+                      //         AssetImage('Assets/person/Group 1000000746.png')),
+                      SizedBox(width: width * 0.01),
                       const CircleAvatar(
                           radius: 30,
                           backgroundImage:
                               AssetImage('Assets/person/Ellipse.png')),
-                      SizedBox(width: width * 0.02),
+                      SizedBox(width: width * 0.05),
                       Container(
                         height: height * 0.07,
                         width: width * 0.13,
@@ -257,11 +258,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     const Text('Jafor',
                         style: TextStyle(color: Colors.grey, fontSize: 17)),
                     SizedBox(width: width * 0.08),
-                    const Text('Avishek',
-                        style: TextStyle(color: Colors.grey, fontSize: 17)),
-                    SizedBox(width: width * 0.05),
                     const Text('mehrin',
                         style: TextStyle(color: Colors.grey, fontSize: 17)),
+                    // SizedBox(width: width * 0.05),
+                    // const Text('',
+                    //     style: TextStyle(color: Colors.grey, fontSize: 17)),
                   ],
                 ),
                 SizedBox(height: height * 0.03),
@@ -269,6 +270,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     style: TextStyle(color: Colors.grey, fontSize: 17)),
                 SizedBox(height: height * 0.02),
                 TextFormField(
+                  style: TextStyle(color: theme.primaryColor),
                   controller: _dateController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -297,6 +299,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        style: TextStyle(color: theme.primaryColor),
                         controller: _timeStartController,
                         decoration: InputDecoration(
 
@@ -315,6 +318,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     SizedBox(width: width * 0.07),
                     Expanded(
                       child: TextFormField(
+                          style: TextStyle(color: theme.primaryColor),
                           controller: _timeEndController,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -355,7 +359,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             child:  Center(
                               child: Text('Urgent',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,
                                     color: isSelected.selectedIndex.value == 0
-                                        ? Colors.black : AColors.grey                              ))),
+                                        ? theme.primaryColor : AColors.grey                              ))),
                           ),
                         ),
                       ),
@@ -383,7 +387,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             child:  Center(
                               child: Text('Running',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,
                               color: isSelected.selectedIndex.value ==1
-                                  ? Colors.black : AColors.grey
+                                  ? theme.primaryColor : AColors.grey
                               ),
                               ),
                             ),
@@ -411,7 +415,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             child:  Center(
                               child: Text('ongoing' ,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,
                                   color: isSelected.selectedIndex.value == 2
-                                      ? Colors.black : AColors.grey                        ))),
+                                      ? theme.primaryColor: AColors.grey                        ))),
                           ),
                         ),
                       ),

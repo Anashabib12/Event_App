@@ -1,5 +1,6 @@
 import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/firebase_options.dart';
+import 'package:event_app/view/getStarted/get_started_view.dart';
 import 'package:event_app/view/login/login_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -45,11 +46,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      themeMode: ThemeMode.system,// Apply the theme based on the saved preference
+      themeMode: ThemeMode.dark,// Apply the theme based on the saved preference
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home:  const CustomBottomNavigation(),
+      home:  const GetStartedView(),
     );
   }
 }

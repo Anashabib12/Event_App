@@ -26,6 +26,7 @@ dependencies:
   provider: ^6.1.2
   font_awesome_flutter: ^10.7.0
   shared_preferences: ^2.3.2
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +42,7 @@ flutter:
     - Assets/onBoarding/OnBoarding3/
     - Assets/social Logo/
     - Assets/ChatPerson/
+    - Assets/Animation/
     - Assets/logos/
     - Assets/person/
     - Assets/icons/

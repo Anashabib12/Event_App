@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../services/firebase/signin_func.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -147,6 +149,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const CustomContainer(
                   suffixIcon: Icons.arrow_forward_ios_outlined,
                   text: "My Tasks"),
+              SizedBox(height: height * 0.02),
+              SizedBox(
+                  width: width * 0.7,
+                  height: 48,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        signOut(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.iconTheme.color,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                      child: const Text(
+                        "Log Out",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ))),
             ],
           ),
         ),

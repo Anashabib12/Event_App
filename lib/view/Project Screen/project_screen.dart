@@ -40,6 +40,7 @@ class ProjectScreen extends StatelessWidget {
 
               SizedBox(height: height * 0.04),
               TextFormField(
+                style: TextStyle(color: theme.primaryColor),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search, color: Colors.grey),
                   hintText: 'Search',

@@ -39,13 +39,13 @@ class TaskCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    appName,
-                    style: TextStyle(
-                      color: theme.primaryColor,
-                      fontSize: 14,
-                    ),
-                  ),
+                  // Text(
+                  //   appName,
+                  //   style: TextStyle(
+                  //     color: theme.primaryColor,
+                  //     fontSize: 14,
+                  //   ),
+                  // ),
                   Text(
                     taskName,
                     style: TextStyle(
@@ -56,7 +56,7 @@ class TaskCard extends StatelessWidget {
                   ),
                   Text(
                     dateTime,
-                    style: TextStyle(color: theme.primaryColor),
+                    style: const TextStyle(color: Colors.grey),
                   ),
                 ],
               ),

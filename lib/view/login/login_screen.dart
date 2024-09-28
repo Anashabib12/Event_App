@@ -227,12 +227,13 @@ class LoginScreen extends StatelessWidget {
       BuildContext context, String assetPath, double width, double height) {
     return Container(
       height: height * 0.06,
-      width: width * 0.12,
+      width: width * 0.14,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.withOpacity(0.3), width: 1.5),
+        image: DecorationImage(image: AssetImage(assetPath),fit: BoxFit.cover),
+        border: Border.all(color: Colors.grey.withOpacity(0.3)),
+
       ),
-      child: Image.asset(assetPath),
     );
   }
 }

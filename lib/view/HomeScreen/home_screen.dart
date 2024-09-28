@@ -9,6 +9,7 @@ import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -163,15 +164,25 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               // Show tasks from SharedPreferences
               tasks.isEmpty
-                  ? Center(
-                      child: Text(
-                        'No tasks available',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: theme.primaryColor,
-                            fontWeight: FontWeight.w800),
+                  ? Column(
+                    children: [
+                      SizedBox(
+                        height: height * 0.08,
+                        child: Center(
+                          child: Text(
+                            'No tasks available',
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: theme.primaryColor,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
                       ),
-                    )
+                      Lottie.asset(
+                          height:  height * 0.3,
+                          'Assets/Animation/Animation - 1727514970400.json',repeat: true,)
+                    ],
+                  )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
