@@ -1,8 +1,5 @@
-import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/firebase_options.dart';
-import 'package:event_app/view/getStarted/get_started_view.dart';
-import 'package:event_app/view/login/login_screen.dart';
-import 'package:flutter/foundation.dart';
+import 'package:event_app/services/auth/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +17,7 @@ void main() async {
         options: DefaultFirebaseOptions.currentPlatform);
   } catch (e) {
     // Handle errors during Firebase initialization
-    if (kDebugMode) {
-      print("Error initializing Firebase: $e");
-    }
+    print("Error initializing Firebase: $e");
     return; // Exit the app if Firebase fails to initialize
   }
 
@@ -46,11 +41,13 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      themeMode: ThemeMode.dark,// Apply the theme based on the saved preference
+      themeMode: isDarkMode
+          ? ThemeMode.dark
+          : ThemeMode.light, // Apply the theme based on the saved preference
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home:  const GetStartedView(),
+      home: const AuthGate(),
     );
   }
 }

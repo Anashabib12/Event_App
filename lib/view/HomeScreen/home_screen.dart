@@ -5,6 +5,7 @@ import 'package:event_app/commons/task_card.dart';
 import 'package:event_app/model/task_model.dart';
 import 'package:event_app/view/TaskStatus/task_status_screen.dart';
 import 'package:event_app/view/TodayTask/today_task_screen.dart';
+import 'package:event_app/view/Update%20Task/update_task.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       for (var task in tasks) {
         if (task.progress < 100) {
           setState(() {
-            task.progress += 1; // Increase progress by 10%
+            task.progress += 1;
             if (task.progress > 100) task.progress = 100; // Cap to 100%
           });
 
@@ -82,6 +83,62 @@ class _HomeScreenState extends State<HomeScreen> {
     List<String> taskList =
         tasks.map((task) => jsonEncode(task.toJson())).toList();
     await prefs.setStringList('tasks', taskList);
+  }
+
+  void _deleteTask(int index) {
+    setState(() {
+      tasks.removeAt(index); // Remove task from the list
+      _saveTasks(); // Persist updated list
+    });
+  }
+
+  void _updateTask(Task task, context, index) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        final theme = Theme.of(context);
+        return AlertDialog(
+          backgroundColor: theme.scaffoldBackgroundColor,
+          title: Text(
+            'Update Task',
+            style: TextStyle(color: theme.primaryColor),
+          ),
+          content: Text(
+            'Are you sure you want to update the task?',
+            style: TextStyle(color: theme.primaryColor),
+          ),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.iconTheme.color,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12))),
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.iconTheme.color,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12))),
+              onPressed: () => Get.to(UpdateTaskScreen(
+                index: index,
+              )),
+              child: const Text(
+                'Update',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    // Navigate to an update screen or show a dialog to edit task
+    // Implement your update logic here
+    print("Update task: ${task.taskName}");
   }
 
   @override
@@ -162,27 +219,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-              // Show tasks from SharedPreferences
               tasks.isEmpty
                   ? Column(
-                    children: [
-                      SizedBox(
-                        height: height * 0.08,
-                        child: Center(
-                          child: Text(
-                            'No tasks available',
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: theme.primaryColor,
-                                fontWeight: FontWeight.w400),
+                      children: [
+                        SizedBox(
+                          height: height * 0.08,
+                          child: Center(
+                            child: Text(
+                              'No tasks available',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: theme.primaryColor,
+                                  fontWeight: FontWeight.w400),
+                            ),
                           ),
                         ),
-                      ),
-                      Lottie.asset(
-                          height:  height * 0.3,
-                          'Assets/Animation/Animation - 1727514970400.json',repeat: true,)
-                    ],
-                  )
+                        Lottie.asset(
+                          height: height * 0.3,
+                          'Assets/Animation/Animation - 1727514970400.json',
+                          repeat: true,
+                        )
+                      ],
+                    )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -197,6 +255,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               '${task.date}\nStart: ${task.timeStart} - End: ${task.timeEnd}',
                           onTap: () {
                             _onTap(task); // Navigate to TaskStatusScreen
+                          },
+                          onDelete: () {
+                            _deleteTask(index); // Delete task from list
+                          },
+                          onUpdate: () {
+                            _updateTask(
+                              task,
+                              context,
+                              index,
+                            ); // Implement update logic
                           },
                         );
                       },

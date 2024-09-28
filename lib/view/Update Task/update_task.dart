@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/controllers/main_controller.dart';
@@ -9,14 +10,16 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert'; // For encoding/decoding JSON
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+class UpdateTaskScreen extends StatefulWidget {
+  const UpdateTaskScreen({super.key, this.index});
+
+  final index;
 
   @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
+  State<UpdateTaskScreen> createState() => _UpdateTaskScreenState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
+class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
   final TextEditingController _taskNameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeStartController = TextEditingController();
@@ -66,7 +69,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   // Function to validate and save the task
-  Future<void> _saveTask() async {
+  Future<void> _updateTask(int index) async {
     if (_taskNameController.text.isEmpty ||
         _dateController.text.isEmpty ||
         _timeStartController.text.isEmpty ||
@@ -104,44 +107,53 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     try {
       final prefs = await SharedPreferences.getInstance();
 
-      // Create a task map
-      Map<String, String> task = {
+      // Create a task map with updated values
+      Map<String, String> updatedTask = {
         'taskName': _taskNameController.text,
         'date': _dateController.text,
         'timeStart': _timeStartController.text,
         'timeEnd': _timeEndController.text,
       };
 
-      // Retrieve existing tasks, or start a new list
+      // Retrieve existing tasks
       List<String> tasks = prefs.getStringList('tasks') ?? [];
 
-      // Add the new task
-      tasks.add(jsonEncode(task));
+      if (index >= 0 && index < tasks.length) {
+        // Update the task at the specified index
+        tasks[index] = jsonEncode(updatedTask);
 
-      // Save the updated list of tasks
-      await prefs.setStringList('tasks', tasks);
+        // Save the updated list of tasks
+        await prefs.setStringList('tasks', tasks);
 
-      // Clear the input fields
-      _taskNameController.clear();
-      _dateController.clear();
-      _timeStartController.clear();
-      _timeEndController.clear();
+        // Clear the input fields
+        _taskNameController.clear();
+        _dateController.clear();
+        _timeStartController.clear();
+        _timeEndController.clear();
 
-      // Show a success message
-      Get.snackbar(
-        'Success',
-        'Task added successfully!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 3), // Adjust duration if necessary
-      );
+        // Show a success message
+        Get.snackbar(
+          'Success',
+          'Task updated successfully!',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 3),
+        );
 
-      // Navigate back to home screen
-      Get.to(const CustomBottomNavigation());
+        // Navigate back to home screen
+        Get.to(const CustomBottomNavigation());
+      } else {
+        Get.snackbar(
+          'Error',
+          'Invalid task index',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     } catch (e) {
       Get.snackbar(
         'Error',
-        'Failed to save task: $e',
+        'Failed to update task: $e',
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -174,7 +186,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       icon: Icons.arrow_back_ios_rounded,
                     ),
                     SizedBox(width: width * 0.2),
-                    Text('Add Task',
+                    Text('Update Task',
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w500,
@@ -221,10 +233,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           backgroundImage:
                               AssetImage('Assets/person/Ellipse (1).png')),
                       SizedBox(width: width * 0.04),
-                      // const CircleAvatar(
-                      //     radius: 30,
-                      //     backgroundImage:
-                      //         AssetImage('Assets/person/Group 1000000746.png')),
                       SizedBox(width: width * 0.01),
                       const CircleAvatar(
                           radius: 30,
@@ -260,9 +268,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     SizedBox(width: width * 0.08),
                     const Text('mehrin',
                         style: TextStyle(color: Colors.grey, fontSize: 17)),
-                    // SizedBox(width: width * 0.05),
-                    // const Text('',
-                    //     style: TextStyle(color: Colors.grey, fontSize: 17)),
                   ],
                 ),
                 SizedBox(height: height * 0.03),
@@ -449,20 +454,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 // Submit Button
                 Center(
                   child: SizedBox(
-                    width: width * 0.6,
-                    height: height * 0.06,
-                    child: ElevatedButton(
-                      onPressed: _saveTask,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.iconTheme.color,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12))),
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(color: Colors.white, fontSize: 17),
-                      ),
-                    ),
-                  ),
+                      width: width * 0.6,
+                      height: height * 0.06,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            _updateTask(widget.index);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: theme.iconTheme.color,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12))),
+                          child: const Text('Save',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 17)))),
                 ),
               ],
             ),

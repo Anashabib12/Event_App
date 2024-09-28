@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:event_app/services/firebase/signin_func.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:event_app/widgets/small_text_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,13 +51,15 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final height  = MediaQuery.of(context).size.height;
-    final width  = MediaQuery.of(context).size.width;
-    final theme = Theme.of(context);    return Scaffold(
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final theme = Theme.of(context);
+    return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.symmetric(vertical: height * 0.08, horizontal: width *0.05),
+          padding: EdgeInsets.symmetric(
+              vertical: height * 0.08, horizontal: width * 0.05),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -126,7 +127,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: height* 0.03),
+              SizedBox(height: height * 0.03),
               Text(
                 "Workspace",
                 style: TextStyle(
@@ -134,7 +135,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                     color: theme.primaryColor,
                     fontWeight: FontWeight.w700),
               ),
-              SizedBox(height: height* 0.02),
+              SizedBox(height: height * 0.02),
               const SmallTextContainer(text: "UI Design", number: "Invite"),
               const SizedBox(
                 height: 30,
@@ -146,7 +147,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                     color: theme.primaryColor,
                     fontWeight: FontWeight.w700),
               ),
-              SizedBox(height: height* 0.02),
+              SizedBox(height: height * 0.02),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -161,7 +162,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: height* 0.04),
+              SizedBox(height: height * 0.04),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -176,9 +177,7 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: height* 0.06),
-
-
+              SizedBox(height: height * 0.06),
             ],
           ),
         ),
