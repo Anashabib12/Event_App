@@ -1,6 +1,6 @@
 # Taskcy - Task Management App
 
-### Overview
+## Overview
 
 Taskcy is a powerful and intuitive task management app that helps users stay organized, productive, and connected. It combines task management with real-time chat, enabling collaboration while keeping track of important tasks.
 Features
@@ -26,17 +26,18 @@ Features
   Responsive Design: Fully responsive, optimized for mobile and tablet devices.
   
 
-### Screenshots
+## Screenshots
 
 
 
-### Installation
 
-To run Taskcy locally, follow these steps:
+## Installation
+
+#### To run Taskcy locally, follow these steps:
 
  Clone the repository:
 
-    git clone https://github.com/yourusername/taskcy.git
+    git clone https://github.com/Anashabib12/Event_App.git
 
 Navigate to the project directory:
 
@@ -56,7 +57,7 @@ Run the app:
 
     flutter run
 
-Tech Stack
+## Tech Stack
 
   Frontend: Flutter
   
@@ -73,7 +74,7 @@ Tech Stack
   UI/UX: Clean and modern design with both light and dark mode support
   
 
-Contributing
+## Contributing
 
 Contributions are welcome! If you'd like to add new features, improve the codebase, or fix issues, feel free to submit a pull request. Please make sure your code follows best practices and includes proper documentation.
 License
