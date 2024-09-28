@@ -9,6 +9,7 @@ import 'package:event_app/widgets/custom_ap_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -108,11 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Iconsax.category,
                   ),
                   Text(
-                    'Today Tasks',
+                    DateFormat('EEEE, dd').format(DateTime.now()),
                     style: TextStyle(
                       color: theme.primaryColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 19,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   CustomApButton(onTap: () {}, icon: Iconsax.notification),
@@ -184,23 +185,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   )
                   : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) {
-                        final task = tasks[index];
-                        return TaskCard(
-                          progress: task.progress / 100.0, // Link progress here
-                          appName: task.taskName,
-                          taskName: task.taskName,
-                          dateTime:
-                              '${task.date}\nStart: ${task.timeStart} - End: ${task.timeEnd}',
-                          onTap: () {
-                            _onTap(task); // Navigate to TaskStatusScreen
-                          },
-                        );
-                      },
-                    ),
+                reverse: true,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  final task = tasks[index];
+                  return TaskCard(
+                    progress: task.progress / 100.0, // Link progress here
+                    appName: task.taskName,
+                    taskName: task.taskName,
+                    dateTime:
+                    '${task.date}\nStart: ${task.timeStart} - End: ${task.timeEnd}',
+                    onTap: () {
+                      _onTap(task); // Navigate to TaskStatusScreen
+                    },
+                  );
+                  },
+              ),
             ],
           ),
         ),

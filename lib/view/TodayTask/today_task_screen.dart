@@ -223,16 +223,30 @@ class _TodayTaskScreenState extends State<TodayTaskScreen> {
                       ),
                     )
                   : ListView.builder(
+                     reverse: true,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: tasks.length,
                       itemBuilder: (context, index) {
+                        Color containerColor;
+                        if (index % 3 == 0) {
+                          containerColor = Colors.blue.withOpacity(0.8); // Blue for index 0, 3, 6...
+                        } else if (index % 3 == 1) {
+                          containerColor = Colors.lightGreen.withOpacity(0.7); // Green for index 1, 4, 7...
+                        } else {
+                          containerColor = AColors.yellow; // Yellow for index 2, 5, 8...
+                        }
                         final task = tasks[index];
-                        return TaskCustomBox(
-                          startTime: task.timeStart,
-                          endTime: task.timeEnd,
-                          backGroundColor: const Color(0xff63B4FF),
-                          title: task.taskName,
+                        return Column(
+                          children: [
+                            TaskCustomBox(
+                              startTime: task.timeStart,
+                              endTime: task.timeEnd,
+                              backGroundColor: containerColor,
+                              title: task.taskName,
+                            ),
+                            SizedBox(height: height *0.02)
+                          ],
                         );
                       },
                     ),

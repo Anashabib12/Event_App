@@ -19,18 +19,25 @@ class TaskCustomBox extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context);
-
     return Padding(
       padding: EdgeInsets.only(left: width * 0.05),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// time
-          Text(startTime,
-              style: TextStyle(
-                  color: theme.primaryColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 17)),
+          Row(
+            children: [
+              Text(startTime,
+                  style: TextStyle(
+                      color: theme.primaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17),),
+              SizedBox(width:  width * 0.05),
+              Text('Start Time',
+                style: TextStyle(color: theme.primaryColor,fontWeight: FontWeight.w500,fontSize: 17),),
+            ],
+          ),
+          SizedBox(height: height*0.01),
           Row(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -57,8 +64,7 @@ class TaskCustomBox extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(title,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 16)),
+                          style: const TextStyle(color: Colors.white, fontSize: 17,fontWeight: FontWeight.w500)),
                       SizedBox(height: height * 0.01),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,12 +95,17 @@ class TaskCustomBox extends StatelessWidget {
               )
             ],
           ),
+          SizedBox(height: height*0.01),
 
-          Text(endTime,
-              style: TextStyle(
-                  color: theme.primaryColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 17)),
+          Row(
+            children: [
+              Text(endTime, style: TextStyle(color: theme.primaryColor,fontWeight: FontWeight.w600,fontSize: 17)),
+              SizedBox(width:  width * 0.05),
+              Text('End Time', style: TextStyle(color: theme.primaryColor,fontWeight: FontWeight.w500,fontSize: 17)),
+            ],
+          ),
+          SizedBox(height: height *0.02),
+          const Divider()
         ],
       ),
     );
