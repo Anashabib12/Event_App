@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_app/Utils/Constant/colors.dart';
 import 'package:event_app/commons/bottom_navigation.dart';
 import 'package:event_app/controllers/main_controller.dart';
 import 'package:event_app/widgets/custom_ap_button.dart';
-import 'package:event_app/widgets/filters.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
