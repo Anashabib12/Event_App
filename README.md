@@ -45,7 +45,7 @@ Features
 
 #### Navigate to the project directory:
 
-    cd taskcy
+    cd Event_App
 
 #### Install the required dependencies:
 
