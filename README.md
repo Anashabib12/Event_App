@@ -31,7 +31,24 @@ Features
   
 
 ## Screenshots
-
+<div style="display: flex; flex-direction: column; gap: 70px;">
+  <img src="https://github.com/user-attachments/assets/1b43df82-8ec3-4b8c-9e02-62a7202ae4eb" alt="Screenshot 1" width="200" />
+  <img src="https://github.com/user-attachments/assets/59832500-d945-4af4-9b8f-5a3e4db76e43" alt="Screenshot 2" width="200" />
+  <img src="https://github.com/user-attachments/assets/cd548613-2e6e-4faf-b95a-bc8caf3e152a" alt="Screenshot 3" width="200" />
+  <img src="https://github.com/user-attachments/assets/58daee73-c48a-435e-a681-409be7634dba" alt="Screenshot 4" width="200" />
+  <img src="https://github.com/user-attachments/assets/3a742f8e-d9b4-4976-b0f7-25c28538a6a1" alt="Screenshot 5" width="200" />
+  <img src="https://github.com/user-attachments/assets/b1733661-6227-4e01-848f-a57faea40a40" alt="Screenshot 6" width="200" />
+  <img src="https://github.com/user-attachments/assets/23d0bfa3-496b-4bcc-9e77-11b96372cad8" alt="Screenshot 7" width="200" />
+  <img src="https://github.com/user-attachments/assets/7688afb6-deb1-4c99-8ced-30f818aec909" alt="Screenshot 8" width="200" />
+  <img src="https://github.com/user-attachments/assets/dacabe78-86b9-4f62-b1bb-9b300f3def2e" alt="Screenshot 9" width="200" />
+  <img src="https://github.com/user-attachments/assets/d082e9f6-22e2-46a3-9fe2-a86e92756a20" alt="Screenshot 10" width="200" />
+  <img src="https://github.com/user-attachments/assets/ef97861a-6241-4f01-831f-2c44cf69e0c3" alt="Screenshot 11" width="200" />
+  <img src="https://github.com/user-attachments/assets/6e67c83f-7b0d-41b3-bb2e-5d8af3e247f9" alt="Screenshot 12" width="200" />
+  <img src="https://github.com/user-attachments/assets/8f6e54ff-c156-43d9-a80b-a87f7882a533" alt="Screenshot 13" width="200" />
+  <img src="https://github.com/user-attachments/assets/4599bb08-9d52-4f0c-9c25-373435875262" alt="Screenshot 14" width="200" />
+  <img src="https://github.com/user-attachments/assets/a27de55f-4502-404f-a6c6-3dbce93fc8d1" alt="Screenshot 15" width="200" />
+  <img src="https://github.com/user-attachments/assets/942d01d4-472d-43a1-aa3a-7dd73b5c4e8d" alt="Screenshot 16" width="200" />
+</div>
 
 
 
